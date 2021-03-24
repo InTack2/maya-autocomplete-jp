@@ -1149,6 +1149,156 @@ def canCreateCaddyManip() -> None:
     pass
 
     
+def componentEditor(control: bool = False,defineTemplate: str = "",docTag: str = "",exists: bool = False,filter: str = "",floatField: str = "",floatSlider: str = "",forceMainConnection: str = "",hidePathName: bool = False,hideZeroColumns: bool = False,highlightConnection: str = "",lockInput: bool = False,lockMainConnection: bool = False,mainListConnection: str = "",newTab: Tuple[str, str, str] = tuple("", "", ""),operationCount: bool = False,operationLabels: bool = False,operationType: int = 1,panel: str = "",parent: str = "",precision: int = 1,removeTab: str = "",selected: bool = False,selectionConnection: str = "",setOperationLabel: Tuple[int, str] = tuple(1, ""),showObjects: bool = False,showSelected: bool = False,sortAlpha: bool = False,stateString: bool = False,unParent: bool = False,unlockMainConnection: bool = False,updateMainConnection: bool = False,useTemplate: str = "") -> None:
+    """
+    このコマンドは、現在のレイアウトに新規コンポーネント エディタを作成します。
+
+
+
+    -----------------------------------------
+
+    Flags:
+
+    -----------------------------------------
+    
+    control (boolean): 照会モード専用です。このエディタの最上位のコントロールを返します。通常は、親を取得してポップアップメニューをアタッチするために使用します。注意:コントロールのないエディタが存在する場合があります。コントロールが存在しない場合は、この照会はNONEを返します。
+
+    -----------------------------------------
+
+    defineTemplate (string): 他の任意のフラグと引数を解析し、かつ引数で指定したコマンドテンプレートに追加するモードに、コマンドのモードを変更します。templateNameが現在のテンプレートとして設定されていれば、その後コマンドが実行されるたびに、この引数が既定の引数として使用されます。
+
+    -----------------------------------------
+
+    docTag (string): エディタにタグをアタッチします。
+
+    -----------------------------------------
+
+    exists (boolean): 指定したオブジェクトが存在するかどうかを返します。他のフラグは無視されます。
+
+    -----------------------------------------
+
+    filter (string): このエディタに使用する項目フィルタオブジェクトの名前を指定します。エディタの主要リストに表示される情報をフィルタします。
+
+    -----------------------------------------
+
+    floatField (string): コンポーネントエディタが値のグループの編集に使用する浮動小数点フィールドを割り当てます。
+
+    -----------------------------------------
+
+    floatSlider (string): コンポーネントエディタが値のグループの編集に使用する浮動小数点スライダを割り当てます。
+
+    -----------------------------------------
+
+    forceMainConnection (string): エディタがコンテンツのソースとして使用するselectionConnectionオブジェクトの名前を指定します。エディタはselectionConnectionオブジェクトに含まれている項目のみを表示します。これは-mainListConnectionフラグの変形で、接続がロックされている場合でも強制的に変更します。このフラグを使用して、-unlockMainConnection、-mainListConnection、-lockMainConnectionフラグを直後に連続して使用する場合に、オーバーヘッドを減します。
+
+    -----------------------------------------
+
+    hidePathName (boolean): 表示された要素のパス名を非表示にします。既定ではこのフラグはfalseに設定されています。
+
+    -----------------------------------------
+
+    hideZeroColumns (boolean): 要素がすべてゼロであるカラムを非表示にします。既定ではこのフラグはfalseに設定されています。
+
+    -----------------------------------------
+
+    highlightConnection (string): そのハイライトリストをエディタと同期化させるselectionConnectionオブジェクトの名前を指定します。すべてのエディタにハイライトリストがあるわけではありません。ハイライトリストがあるエディタの場合、これは第二の選択項目を表示したリストになります。
+
+    -----------------------------------------
+
+    lockInput (boolean): エディタがアクティブリストの変更に応答することができないようにします。選択項目の接続とは独立しています。
+
+    -----------------------------------------
+
+    lockMainConnection (boolean): mainConnection内のオブジェクトの現在のリストをロックして、そのオブジェクトだけがエディタ内に表示されるようにします。これ以降、元のmainConnectionに変更を加えても無視されます。
+
+    -----------------------------------------
+
+    mainListConnection (string): エディタがコンテンツのソースとして使用するselectionConnectionオブジェクトの名前を指定します。エディタはselectionConnectionオブジェクトに含まれている項目のみを表示します。
+
+    -----------------------------------------
+
+    newTab ([string, string, string]): 1番目の引数で名前を付けた新しいタブを、3番目の引数で指定したセットの要素を使用して2番目の引数として指定した既存のタブを基に作成します。
+
+    -----------------------------------------
+
+    operationCount (boolean): コンポーネントエディタ(ComponentEditor)に既知の操作タイプの総数を返します。
+
+    -----------------------------------------
+
+    operationLabels (boolean): エディタに既知のすべての操作タイプ用の名前を含んでいる文字配列を返します。
+
+    -----------------------------------------
+
+    operationType (int): 既知の操作タイプのどれを実行している必要があるかをエディタに知らせます。これは0から始まるインデックスです。
+
+    -----------------------------------------
+
+    panel (string): このエディタ用のパネルを指定します。既定では、エディタがスクリプトパネルの作成コールバックで作成された場合、エディタはそのパネルに属します。エディタがパネルに属していない場合、エディタのあるウィンドウを削除するとエディタも削除されます。
+
+    -----------------------------------------
+
+    parent (string): このエディタの親のレイアウトを指定します。このフラグは、エディタが現在ペアレント化されていない場合のみに効果があります。
+
+    -----------------------------------------
+
+    precision (int): 小数点の右側に表示する最大桁数を指定します。0から20まで指定可能です。
+
+    -----------------------------------------
+
+    removeTab (string): 指定したセットに基づくタブを除去します。
+
+    -----------------------------------------
+
+    selected (boolean): 現在選択されているカラムのラベルを含む文字列のリストを返します。
+
+    -----------------------------------------
+
+    selectionConnection (string): その独自のセレクションリストをエディタと同期化させるselectionConnectionオブジェクトの名前を指定します。このエディタから選択する場合、selectionConnectionオブジェクトの中から選択します。オブジェクトが変更されると、エディタが更新されて変更が反映されます。
+
+    -----------------------------------------
+
+    setOperationLabel ([int, string]): 整数インデックスで指定した既存の操作タイプの名前として文字列を使用します。このフラグで行われた変更をUIに通知できるようにするメッセージングシステムはないことに注意してください。
+
+    -----------------------------------------
+
+    showObjects (boolean): 現在のアクティブリストのカラムだけを表示します。
+
+    -----------------------------------------
+
+    showSelected (boolean): 現在選択されているカラムだけを表示します。既定ではこのフラグがfalseに設定されているため、すべてのカラムが選択されます。このフラグによる結果は、現在の-hideZeroColumns設定に依存します。
+
+    -----------------------------------------
+
+    sortAlpha (boolean): カラムのアルファベット順(true)または階層別ソートをコントロールします。
+
+    -----------------------------------------
+
+    stateString (boolean): 照会モード専用のフラグです。エディタを作成して現在のエディタの状態と一致させるMELコマンドを返します。返されたコマンド文字列は、指定した名前の代わりに文字列変数$editorNameを使用します。
+
+    -----------------------------------------
+
+    unParent (boolean): エディタをそのレイアウトから除去するように指定します。これは照会モードでは使用できません。
+
+    -----------------------------------------
+
+    unlockMainConnection (boolean): mainConnectionをロック解除して、オリジナルのmainConnection(まだ使用可能な場合)を効率的に復元し、ダイナミックな更新を行います。
+
+    -----------------------------------------
+
+    updateMainConnection (boolean): ロックされたmainConnectionをオリジナルのmainConnectionから更新させますが、ロック状態は保持されます。
+
+    -----------------------------------------
+
+    useTemplate (string): コマンドに、現在のものとは異なるコマンドテンプレートを使用するように強制します。
+
+    -----------------------------------------
+
+    Return Value:
+    None: stringパネル名照会モードでは、戻り値のタイプは照会されたフラグに基づきます。
+    """
+    pass
+
+    
 def contentBrowser(addContentPath: str = "",context: Tuple[str, str, str] = tuple("", "", ""),control: bool = False,defineTemplate: str = "",docTag: str = "",exists: bool = False,filter: str = "",forceMainConnection: str = "",highlightConnection: str = "",location: str = "",lockMainConnection: bool = False,mainListConnection: str = "",panel: str = "",parent: str = "",preview: bool = False,refreshTreeView: bool = False,removeContentPath: str = "",saveCurrentContext: bool = False,selectionConnection: str = "",stateString: bool = False,thumbnailView: bool = False,treeView: bool = False,unParent: bool = False,unlockMainConnection: bool = False,updateMainConnection: bool = False,useTemplate: str = "") -> None:
     """
     このコマンドを使用して、コンテンツ ブラウザを編集および照会します。コンテンツ ブラウザは固有のパネルなので、同時に存在できるインスタンスは 1 つのみです。オプションの引数はコントロールの名前です。
@@ -1345,6 +1495,116 @@ def getPanel(allConfigs: bool = False,allPanels: bool = False,allScriptedTypes: 
 
     Return Value:
     None: string[]パネル名の配列
+    """
+    pass
+
+    
+def hardwareRenderPanel(camera: str = "",control: bool = False,copy: str = "",createString: bool = False,defineTemplate: str = "",docTag: str = "",editString: bool = False,exists: bool = False,glRenderEditor: bool = False,init: bool = False,isUnique: bool = False,label: str = "",menuBarRepeatLast: bool = False,menuBarVisible: bool = False,needsInit: bool = False,parent: str = "",popupMenuProcedure: str = "",replacePanel: str = "",tearOff: bool = False,tearOffCopy: str = "",tearOffRestore: bool = False,unParent: bool = False,useTemplate: str = "") -> None:
+    """
+    このコマンドは、ハードウェア レンダー エディタだけを含むハードウェア レンダー パネルを作成、編集、照会します。
+
+
+
+    -----------------------------------------
+
+    Flags:
+
+    -----------------------------------------
+    
+    camera (string): glレンダーパネルのカメラを照会または編集します。
+
+    -----------------------------------------
+
+    control (boolean): このパネルの最上位のコントロールを返します。通常は、親を取得してポップアップメニューをアタッチするために使用します。注意:パネルにはコントロールがないことがあります。コントロールが存在しない場合、このフラグは""を返します。
+
+    -----------------------------------------
+
+    copy (string): このパネルを指定したパネルのコピーにします。両方のパネルは同じタイプである必要があります。
+
+    -----------------------------------------
+
+    createString (boolean): パネルの作成に使用するコマンド文字列
+
+    -----------------------------------------
+
+    defineTemplate (string): 他の任意のフラグと引数を解析し、かつ引数で指定したコマンドテンプレートに追加するモードに、コマンドのモードを変更します。templateNameが現在のテンプレートとして設定されていれば、その後コマンドが実行されるたびに、この引数が既定の引数として使用されます。
+
+    -----------------------------------------
+
+    docTag (string): Mayaのパネルにタグをアタッチします。
+
+    -----------------------------------------
+
+    editString (boolean): パネルの編集に使用するコマンド文字列
+
+    -----------------------------------------
+
+    exists (boolean): 指定したオブジェクトが存在するかどうかを返します。他のフラグは無視されます。
+
+    -----------------------------------------
+
+    glRenderEditor (boolean): 照会モード専用です。このフラグは、パネルに含まれるglレンダーエディタの名前を返します。
+
+    -----------------------------------------
+
+    init (boolean): パネルの既定の状態を初期化します。これは、file-newとfile-openによって自動的に実行されます。
+
+    -----------------------------------------
+
+    isUnique (boolean): このパネルタイプのインスタンスが1つだけ許可されている場合、trueを返します。
+
+    -----------------------------------------
+
+    label (string): ユーザが読みやすいパネル用ラベルを指定します。
+
+    -----------------------------------------
+
+    menuBarRepeatLast (boolean): メニューヘッダを中マウスボタンでクリックしたときに、最後に選択したメニュー項目を繰り返すかどうかをコントロールします。
+
+    -----------------------------------------
+
+    menuBarVisible (boolean): パネルのメニューバーを表示するかどうかを制御します。
+
+    -----------------------------------------
+
+    needsInit (boolean): (内部)OnEditは、初期化が必要なものとしてパネルをマークします。照会すると、初期化が必要なものとしてパネルがマークされているかどうかを返します。file-newとfile-openで使用されます。
+
+    -----------------------------------------
+
+    parent (string): このパネルの親のレイアウトを指定します。
+
+    -----------------------------------------
+
+    popupMenuProcedure (script): パネルのポップアップメニューを作成するためにコールされるプロシージャを指定します。既定値は「buildPanelPopupMenu」です。プロシージャは、パネル名である文字列引数を持つ必要があります。
+
+    -----------------------------------------
+
+    replacePanel (string): 指定したパネルをこのパネルと置き換えます。ターゲットパネルが同じレイアウト内にある場合、入れ替えを実行します。
+
+    -----------------------------------------
+
+    tearOff (boolean): このパネルを切り離し、パネルの親としてのpaneLayoutを持つフローティングウィンドウにします。照会すると、パネルが独自のウィンドウに切り離されたかどうかを返します。
+
+    -----------------------------------------
+
+    tearOffCopy (string): このパネルを、指定したソースパネルのコピーを切り離したウィンドウとして作成します。
+
+    -----------------------------------------
+
+    tearOffRestore (boolean): パネルが切り離されていて、フォーカスされている場合に、パネルを復元します。パネルがドッキングされている場合は、ドッキングされたウィンドウ内でアクティブなパネルになります。パネルを切り離す場合のみに使用される-to/-tearOffフラグではなく、このフラグをすべてのパネルに追加される既定のフラグにする必要があります。
+
+    -----------------------------------------
+
+    unParent (boolean): パネルをそのレイアウトから除去するように指定します。照会には使用できません。
+
+    -----------------------------------------
+
+    useTemplate (string): コマンドに、現在のものとは異なるコマンドテンプレートを使用するように強制します。
+
+    -----------------------------------------
+
+    Return Value:
+    None: stringパネル名照会モードでは、戻り値のタイプは照会されたフラグに基づきます。
     """
     pass
 
@@ -1911,7 +2171,7 @@ def hyperGraph(addBookmark: bool = False,addDependGraph: str = "",addDependNode:
 
     -----------------------------------------
 
-    showExpressions (boolean): エクスプレッションがこのバージョンのアプリケーションでサポートされていない場合、このフラグの効果はありません。
+    showExpressions (boolean): エクスプレッションのリレーションをDAGノードで表示します。
 
     -----------------------------------------
 
@@ -3079,7 +3339,7 @@ def modelPanel(barLayout: bool = False,camera: str = "",control: bool = False,co
     pass
 
     
-def nodeEditor(activeTab: int = 1,addNewNodes: bool = False,addNode: str = "",additiveGraphingMode: bool = False,allAttributes: bool = False,allNodes: bool = False,allowNewTabs: bool = False,allowTabTearoff: bool = False,autoSizeNodes: bool = False,beginNewConnection: str = "",breakSelectedConnections: bool = False,closeAllTabs: bool = False,closeTab: int = 1,connectSelectedNodes: bool = False,connectionMinSegment: float = 1.0,connectionOffset: float = 1.0,connectionRoundness: float = 1.0,connectionStyle: str = "",connectionTension: int = 1,consistentNameSize: bool = False,contentsChangedCommand: str = "",control: bool = False,createInfo: str = "",createNodeCommand: str = "",createTab: Tuple[int, str] = tuple(1, ""),crosshairOnEdgeDragging: bool = False,customAttributeListEdit: Tuple[str, str] = tuple("", ""),cycleHUD: bool = False,defaultPinnedState: bool = False,defineTemplate: str = "",deleteSelected: bool = False,docTag: str = "",dotFormat: str = "",downstream: bool = False,duplicateTab: Tuple[int, int] = tuple(1, 1),enableOpenGL: bool = False,exists: bool = False,extendToShapes: bool = False,feedbackConnection: bool = False,feedbackNode: bool = False,feedbackPlug: bool = False,feedbackTabIndex: bool = False,feedbackType: bool = False,filter: str = "",filterCreateNodeTypes: str = "",focusCommand: str = "",forceMainConnection: str = "",frameAll: bool = False,frameModelSelection: bool = False,frameSelected: bool = False,getNodeList: bool = False,graphSelectedConnections: bool = False,graphSelection: bool = False,gridSnap: bool = False,gridVisibility: bool = False,highlightConnection: str = "",highlightConnections: Tuple[str, bool] = tuple("", False),hudMessage: Tuple[str, int, float] = tuple("", 1, 1.0),ignoreAssets: bool = False,island: bool = False,keyPressCommand: str = "",keyReleaseCommand: str = "",layout: bool = False,layoutCommand: str = "",lockMainConnection: bool = False,mainListConnection: str = "",nodeSwatchSize: str = "",nodeTitleMode: str = "",nodeViewMode: str = "",panView: Tuple[float, float] = tuple(1.0, 1.0),panel: str = "",parent: str = "",pinSelectedNodes: bool = False,popupMenuScript: str = "",primary: bool = False,redockTab: bool = False,removeDownstream: bool = False,removeNode: str = "",removeUnselected: bool = False,removeUpstream: bool = False,renameNode: str = "",renameTab: Tuple[int, str] = tuple(1, ""),restoreInfo: str = "",restoreLastClosedTab: bool = False,rootNode: str = "",rootsFromSelection: bool = False,scaleView: float = 1.0,selectAll: bool = False,selectConnectionNodes: bool = False,selectDownstream: bool = False,selectFeedbackConnection: bool = False,selectNode: str = "",selectUpstream: bool = False,selectionConnection: str = "",settingsChangedCallback: str = "",shaderNetworks: bool = False,showAllNodeAttributes: str = "",showNamespace: bool = False,showSGShapes: bool = False,showShapes: bool = False,showTabs: bool = False,showTransforms: bool = False,stateString: bool = False,syncedSelection: bool = False,tabChangeCommand: str = "",toggleAttrFilter: bool = False,toggleSelectedPins: bool = False,toggleSwatchSize: str = "",toolTipCommand: str = "",traversalDepthLimit: int = 1,unParent: bool = False,unlockMainConnection: bool = False,updateMainConnection: bool = False,upstream: bool = False,useAssets: bool = False,useTemplate: str = "") -> None:
+def nodeEditor(activeTab: int = 1,addNewNodes: bool = False,addNode: str = "",additiveGraphingMode: bool = False,allAttributes: bool = False,allNodes: bool = False,allowNewTabs: bool = False,allowTabTearoff: bool = False,autoSizeNodes: bool = False,beginCreateNode: bool = False,beginNewConnection: str = "",breakSelectedConnections: bool = False,closeAllTabs: bool = False,closeTab: int = 1,connectSelectedNodes: bool = False,connectionMinSegment: float = 1.0,connectionOffset: float = 1.0,connectionRoundness: float = 1.0,connectionStyle: str = "",connectionTension: int = 1,consistentNameSize: bool = False,contentsChangedCommand: str = "",control: bool = False,createInfo: str = "",createNodeCommand: str = "",createTab: Tuple[int, str] = tuple(1, ""),crosshairOnEdgeDragging: bool = False,customAttributeListEdit: Tuple[str, str] = tuple("", ""),cycleHUD: bool = False,defaultPinnedState: bool = False,defineTemplate: str = "",deleteSelected: bool = False,docTag: str = "",dotFormat: str = "",downstream: bool = False,duplicateTab: Tuple[int, int] = tuple(1, 1),enableOpenGL: bool = False,exists: bool = False,extendToShapes: bool = False,feedbackConnection: bool = False,feedbackNode: bool = False,feedbackPlug: bool = False,feedbackTabIndex: bool = False,feedbackType: bool = False,filter: str = "",filterCreateNodeTypes: str = "",focusCommand: str = "",forceMainConnection: str = "",frameAll: bool = False,frameModelSelection: bool = False,frameSelected: bool = False,getNodeList: bool = False,graphSelectedConnections: bool = False,graphSelection: bool = False,gridSnap: bool = False,gridVisibility: bool = False,highlightConnection: str = "",highlightConnections: Tuple[str, bool] = tuple("", False),hudMessage: Tuple[str, int, float] = tuple("", 1, 1.0),ignoreAssets: bool = False,island: bool = False,keyPressCommand: str = "",keyReleaseCommand: str = "",layout: bool = False,layoutCommand: str = "",lockMainConnection: bool = False,mainListConnection: str = "",nodeSwatchSize: str = "",nodeTitleMode: str = "",nodeViewMode: str = "",panView: Tuple[float, float] = tuple(1.0, 1.0),panel: str = "",parent: str = "",pinSelectedNodes: bool = False,popupMenuScript: str = "",primary: bool = False,redockTab: bool = False,removeDownstream: bool = False,removeNode: str = "",removeUnselected: bool = False,removeUpstream: bool = False,renameNode: str = "",renameTab: Tuple[int, str] = tuple(1, ""),restoreInfo: str = "",restoreLastClosedTab: bool = False,rootNode: str = "",rootsFromSelection: bool = False,scaleView: float = 1.0,selectAll: bool = False,selectConnectionNodes: bool = False,selectDownstream: bool = False,selectFeedbackConnection: bool = False,selectNode: str = "",selectUpstream: bool = False,selectionConnection: str = "",settingsChangedCallback: str = "",shaderNetworks: bool = False,showAllNodeAttributes: str = "",showNamespace: bool = False,showSGShapes: bool = False,showShapes: bool = False,showTabs: bool = False,showTransforms: bool = False,stateString: bool = False,syncedSelection: bool = False,tabChangeCommand: str = "",toggleAttrFilter: bool = False,toggleSelectedPins: bool = False,toggleSwatchSize: str = "",toolTipCommand: str = "",traversalDepthLimit: int = 1,unParent: bool = False,unlockMainConnection: bool = False,updateMainConnection: bool = False,upstream: bool = False,useAssets: bool = False,useTemplate: str = "") -> None:
     """
     このコマンドは、nodeEditor エディタの作成、編集、照会を行います。オプションの引数はコントロールの名前です。
 
@@ -3124,6 +3384,10 @@ def nodeEditor(activeTab: int = 1,addNewNodes: bool = False,addNode: str = "",ad
     -----------------------------------------
 
     autoSizeNodes (boolean): オンの場合、ノード名の長さによって既定のノード幅が動的に決定されます。既定値はオンです。
+
+    -----------------------------------------
+
+    beginCreateNode (boolean): マウスの位置でインタラクティブなノード作成を開始します。これによりコントロールが作成され、エディタでノードをすばやく作成できます。実際の作成はcreateNodeCommandよって代理で実行されます。
 
     -----------------------------------------
 
@@ -5227,6 +5491,172 @@ def visor(addFolder: bool = False,addNodes: str = "",allowPanningInX: bool = Fal
     pass
 
     
+def webBrowser(annotation: str = "",back: bool = False,backgroundColor: Tuple[float, float, float] = tuple(1.0, 1.0, 1.0),defineTemplate: str = "",docTag: str = "",dragCallback: str = "",dropCallback: str = "",enable: bool = False,enableBackground: bool = False,enableKeyboardFocus: bool = False,exists: bool = False,find: str = "",forward: bool = False,fullPathName: bool = False,height: int = 1,highlightColor: Tuple[float, float, float] = tuple(1.0, 1.0, 1.0),home: bool = False,isObscured: bool = False,manage: bool = False,matchCase: bool = False,matchWholeWorld: bool = False,noBackground: bool = False,numberOfPopupMenus: bool = False,openURL: str = "",parent: str = "",popupMenuArray: bool = False,preventOverride: bool = False,reload: bool = False,searchForward: bool = False,statusBarMessage: str = "",stop: bool = False,urlChangedCb: str = "",useTemplate: str = "",visible: bool = False,visibleChangeCommand: str = "",width: int = 1,wrap: bool = False) -> None:
+    """
+    このコマンドは廃止されました。Maya の次のバージョンで除去される予定です。Maya の内部 Web ブラウザは、ご使用のブラウザと Maya を接続するプラグインに置き換えられました。Maya と外部ブラウザ アプリケーションとの通信をセットアップする方法の詳細については、ヘルプを参照してください。
+
+
+
+    -----------------------------------------
+
+    Flags:
+
+    -----------------------------------------
+    
+    annotation (string): コントロールに文字列値で注釈を付けます。
+
+    -----------------------------------------
+
+    back (boolean): 1ページ戻る
+
+    -----------------------------------------
+
+    backgroundColor ([float, float, float]): コントロールのバックグラウンドカラーです。引数は、赤、緑、青のカラー成分に対応しています。それぞれの成分の値は、0.0～1.0です。backgroundColorを設定する場合、enableBackgroundをfalseに指定していない限り、バックグラウンドは自動的に有効になります。
+
+    -----------------------------------------
+
+    defineTemplate (string): 他の任意のフラグと引数を解析し、かつ引数で指定したコマンドテンプレートに追加するモードに、コマンドのモードを変更します。templateNameが現在のテンプレートとして設定されていれば、その後コマンドが実行されるたびに、この引数が既定の引数として使用されます。
+
+    -----------------------------------------
+
+    docTag (string): コントロールにドキュメンテーションフラグを追加します。ドキュメンテーションフラグは、ディレクトリ構造になっています。(例:-dtrender/multiLister/createNode/material)
+
+    -----------------------------------------
+
+    dragCallback (script): 中マウスボタンを押すとコールされるコールバックを追加します。MELバージョンのコールバックの書式は次のとおりです。globalprocstring[]callbackName(string$dragControl,int$x,int$y,int$mods)procはドロップ先に転送される文字配列を返します。規則により、配列の先頭文字列はユーザ設定可能なメッセージタイプを表しています。アプリケーションで定義されたドラッグ元のコントロールは、このコールバックを無視する可能性があります。$modsで、キーモディファイアであるCTRLとSHIFTをテストできます。有効な値は、0==モディファイアなし、1==SHIFT、2==CTRL、3==CTRL+SHIFTです。Pythonでも同様ですが、コールバックの指定方法が2つあります。お勧めの方法は、引数としてPython関数オブジェクトを渡すことです。この場合、Pythonコールバックの書式は次のようになります。defcallbackName(dragControl,x,y,modifiers):この引数の値は、上記のMELバージョンの引数と同じです。Pythonでコールバックを指定するもう1つの方法では、実行する文字列を指定します。この場合、Pythonの標準的なフォーマット演算子を介して文字列に値が代入されます。このフォーマットの値は、キー「dragControl」、「x」、「y」、「modifiers」と共に辞書で渡されます。dragControlの値は文字列で、その他の値は整数です(コールバック文字列の例:「print'%(dragControl)s%(x)d%(y)d%(modifiers)d'」)。
+
+    -----------------------------------------
+
+    dropCallback (script): ドラッグ＆ドロップ操作をドロップ位置で解放したときにコールされるコールバックを追加します。MELバージョンのコールバックの書式は次のとおりです。globalproccallbackName(string$dragControl,string$dropControl,string$msgs[],int$x,int$y,int$type)procは、ドラッグ元から転送される文字配列を受け取ります。msgs配列の先頭文字列はユーザ定義のメッセージタイプを表します。アプリケーションで定義されたドロップ先のコントロールでは、このコールバックが無視されることがあります。$typeの値は、1==移動、2==コピー、3==リンクのいずれかです。Pythonでも同様ですが、コールバックの指定方法が2つあります。お勧めの方法は、引数としてPython関数オブジェクトを渡すことです。この場合、Pythonコールバックの書式は次のようになります。defpythonDropTest(dragControl,dropControl,messages,x,y,dragType):この引数の値は、上記のMELバージョンの引数と同じです。Pythonでコールバックを指定するもう1つの方法では、実行する文字列を指定します。この場合、Pythonの標準的なフォーマット演算子を介して文字列に値が代入されます。このフォーマットの値は、キー「dragControl」、「dropControl」、「messages」、「x」、「y」、「type」と共に辞書で渡されます。dragControlの値は文字列で、その他の値は整数です(コールバック文字列の例:「print'%(dragControl)s%(dropControl)s%(messages)r%(x)d%(y)d%(type)d'」)。
+
+    -----------------------------------------
+
+    enable (boolean): コントロールの有効、無効です。既定ではtrueに設定されていて、コントロールは有効になっています。falseを指定するとコントロールはグレー表示になって無効になります。
+
+    -----------------------------------------
+
+    enableBackground (boolean): コントロールのバックグラウンドカラーを有効にします。
+
+    -----------------------------------------
+
+    enableKeyboardFocus (boolean): 有効にすると、[Tab]キーを押してコントロールに移動し、キーボードで値を選択することができます。有効でない場合は、マウスのみを使用できます。このフラグは通常、編集コントロールやリストコントロールなどで既定で使用されるコントロールから、キーボードフォーカスのサポートをオフにするために使用されます。
+
+    -----------------------------------------
+
+    exists (boolean): 指定したオブジェクトが存在するかどうかを返します。他のフラグは無視されます。
+
+    -----------------------------------------
+
+    find (string): ページ内のテキストを検索
+
+    -----------------------------------------
+
+    forward (boolean): 1ページ進む
+
+    -----------------------------------------
+
+    fullPathName (boolean): すべての親を含むウィジェットのフルパス名を返します。
+
+    -----------------------------------------
+
+    height (int): コントロールの高さです。コントロールは親のレイアウトの条件によって無効にされない限り、このサイズを保持しようとします。
+
+    -----------------------------------------
+
+    highlightColor ([float, float, float]): コントロールのハイライトカラーです。引数は、赤、緑、青のカラー成分に対応しています。それぞれの成分の値は、0.0～1.0です。
+
+    -----------------------------------------
+
+    home (boolean): ホームページに移動
+
+    -----------------------------------------
+
+    isObscured (boolean): コントロールが実際に表示されるかどうかを返します。コントロールは、次の場合に隠れた状態になります。非表示の場合、別のコントロールで(完全に、または部分的に)ブロックされた場合、コントロールまたは親のレイアウトを制御できない場合、あるいはコントロールのウィンドウが非表示またはアイコン化されている場合。
+
+    -----------------------------------------
+
+    manage (boolean): コントロールの状態を管理します。管理されていないコントロールは表示されず、画面の領域も占有しません。既定では、コントロールは管理できるように作成されます。
+
+    -----------------------------------------
+
+    matchCase (boolean): 一致がケースを考慮する必要がある場合はtrue
+
+    -----------------------------------------
+
+    matchWholeWorld (boolean): 一致がワールド全体をチェックする必要がある場合はtrue
+
+    -----------------------------------------
+
+    noBackground (boolean): コントロールのバックグラウンドをクリア/リセットします。バックグラウンドは、trueを渡すと一切描画されず、falseを渡すと描画されます。このフラグの状態は、このコントロールの子に継承されます。
+
+    -----------------------------------------
+
+    numberOfPopupMenus (boolean): このコントロールにアタッチされるポップアップメニューの数を返します。
+
+    -----------------------------------------
+
+    openURL (string): 名前の付いたURLを開く
+
+    -----------------------------------------
+
+    parent (string): コントロールの親のレイアウトです。
+
+    -----------------------------------------
+
+    popupMenuArray (boolean): このコントロールにアタッチされる全ポップアップメニューの名前を返します。
+
+    -----------------------------------------
+
+    preventOverride (boolean): trueの場合、コントロールの右マウスボタンメニューを使用したコントロールアトリビュートのオーバーライドは無効になります。
+
+    -----------------------------------------
+
+    reload (boolean): 現在のページを再ロード
+
+    -----------------------------------------
+
+    searchForward (boolean): 検索が現在の位置から前方に移動すべき場合はtrue
+
+    -----------------------------------------
+
+    statusBarMessage (string): マウスがコントロール上にある場合にステータスバーに表示する追加の文字列です。
+
+    -----------------------------------------
+
+    stop (boolean): ページのロードを中止
+
+    -----------------------------------------
+
+    urlChangedCb (string): URLが変更された場合に呼び出すコマンドです。
+
+    -----------------------------------------
+
+    useTemplate (string): コマンドに、現在のものとは異なるコマンドテンプレートを使用するように強制します。
+
+    -----------------------------------------
+
+    visible (boolean): コントロールの可視の状態です。既定では、コントロールは表示されます。コントロールの実際の外見も、その親レイアウトの可視の状態によって異なることに注意してください。
+
+    -----------------------------------------
+
+    visibleChangeCommand (script): コントロールの可視の状態が変更されたときに実行されるコマンドです。
+
+    -----------------------------------------
+
+    width (int): コントロールの幅を指定します。コントロールは親のレイアウトの条件によって無効にされない限り、このサイズを保持しようとします。
+
+    -----------------------------------------
+
+    wrap (boolean): ページがラップする必要がある場合はtrueに設定します。
+
+    -----------------------------------------
+
+    Return Value:
+    None: stringコントロールへのフル パス名照会モードでは、戻り値のタイプは照会されたフラグに基づきます。
+    """
+    pass
+
+    
 def attrColorSliderGrp(adjustableColumn: int = 1,adjustableColumn2: int = 1,adjustableColumn3: int = 1,adjustableColumn4: int = 1,adjustableColumn5: int = 1,adjustableColumn6: int = 1,annotation: str = "",attrNavDecision: Tuple[str, str] = tuple("", ""),attribute: str = "",backgroundColor: Tuple[float, float, float] = tuple(1.0, 1.0, 1.0),columnAlign: Tuple[int, str] = tuple(1, ""),columnAlign2: Tuple[str, str] = tuple("", ""),columnAlign3: Tuple[str, str, str] = tuple("", "", ""),columnAlign4: Tuple[str, str, str, str] = tuple("", "", "", ""),columnAlign5: Tuple[str, str, str, str, str] = tuple("", "", "", "", ""),columnAlign6: Tuple[str, str, str, str, str, str] = tuple("", "", "", "", "", ""),columnAttach: Tuple[int, str, int] = tuple(1, "", 1),columnAttach2: Tuple[str, str] = tuple("", ""),columnAttach3: Tuple[str, str, str] = tuple("", "", ""),columnAttach4: Tuple[str, str, str, str] = tuple("", "", "", ""),columnAttach5: Tuple[str, str, str, str, str] = tuple("", "", "", "", ""),columnAttach6: Tuple[str, str, str, str, str, str] = tuple("", "", "", "", "", ""),columnOffset2: Tuple[int, int] = tuple(1, 1),columnOffset3: Tuple[int, int, int] = tuple(1, 1, 1),columnOffset4: Tuple[int, int, int, int] = tuple(1, 1, 1, 1),columnOffset5: Tuple[int, int, int, int, int] = tuple(1, 1, 1, 1, 1),columnOffset6: Tuple[int, int, int, int, int, int] = tuple(1, 1, 1, 1, 1, 1),columnWidth: Tuple[int, int] = tuple(1, 1),columnWidth1: int = 1,columnWidth2: Tuple[int, int] = tuple(1, 1),columnWidth3: Tuple[int, int, int] = tuple(1, 1, 1),columnWidth4: Tuple[int, int, int, int] = tuple(1, 1, 1, 1),columnWidth5: Tuple[int, int, int, int, int] = tuple(1, 1, 1, 1, 1),columnWidth6: Tuple[int, int, int, int, int, int] = tuple(1, 1, 1, 1, 1, 1),defineTemplate: str = "",docTag: str = "",dragCallback: str = "",dropCallback: str = "",enable: bool = False,enableBackground: bool = False,enableKeyboardFocus: bool = False,exists: bool = False,fullPathName: bool = False,height: int = 1,highlightColor: Tuple[float, float, float] = tuple(1.0, 1.0, 1.0),hsvValue: Tuple[float, float, float] = tuple(1.0, 1.0, 1.0),isObscured: bool = False,label: str = "",manage: bool = False,noBackground: bool = False,numberOfPopupMenus: bool = False,parent: str = "",popupMenuArray: bool = False,preventOverride: bool = False,rgbValue: Tuple[float, float, float] = tuple(1.0, 1.0, 1.0),rowAttach: Tuple[int, str, int] = tuple(1, "", 1),showButton: bool = False,statusBarMessage: str = "",useTemplate: str = "",visible: bool = False,visibleChangeCommand: str = "",width: int = 1) -> None:
     """
     どのグループ コマンドを使用しても、カラム 1 から始まるカラムに個々のコントロールが配置されます。各コントロール(カラム)のレイアウトは、-cw/columnWidth、-co/columnOffset、-cat/columnAttach、-cal/columnAlign、-adj/adjustableColumn の各フラグを使用してカスタマイズできます。既定では、カラムはオフセットなしで左に揃えられ、幅は 100 ピクセルです。どのグループでも、1 つのカラムだけが調整できます。
@@ -6158,7 +6588,7 @@ def attrFieldSliderGrp(adjustableColumn: int = 1,adjustableColumn2: int = 1,adju
     -----------------------------------------
 
     Return Value:
-    None: stringコントロールへのフル パス名照会モードでは、戻り値のタイプは照会されたフラグに基づきます。
+    None: stringコントロールへのフル パス名です。照会モードでは、戻り値のタイプは照会されたフラグに基づきます。
     """
     pass
 
@@ -6311,11 +6741,11 @@ def attrNavigationControlGrp(adjustableColumn: int = 1,adjustableColumn2: int = 
 
     -----------------------------------------
 
-    connectAttrToDropped (script): アトリビュートにノードがドラッグ＆ドロップされたときに実行されるスクリプトです(マルチリスタとアトリビュートエディタ(AttributeEditor)が発行します)。スクリプトは、移動元のノードと移動先のノードという、2つの引数を取ります。
+    connectAttrToDropped (script): アトリビュートにノードがドラッグ＆ドロップされたときに実行されるスクリプトです(マルチリスタとアトリビュートエディタ(AttributeEditor)が発行します)。スクリプトは、移動元のノードとそれに対応する移動先のアトリビュートという、2つの引数を取ります。
 
     -----------------------------------------
 
-    connectNodeToDropped (script): ノードに別のノードがドラッグ＆ドロップされたときに実行されるスクリプトです(Multi-listerが発行します)。スクリプトは、移動元のノードと移動先のノードという、2つの引数を取ります。
+    connectNodeToDropped (script): ノードに別のノードがドラッグ＆ドロップされたときに実行されるスクリプトです(Multi-listerが発行します)。スクリプトは、移動元のノードとそれに対応する移動先のノードという、2つの引数を取ります。
 
     -----------------------------------------
 
@@ -6476,7 +6906,7 @@ def attrNavigationControlGrp(adjustableColumn: int = 1,adjustableColumn2: int = 
     -----------------------------------------
 
     Return Value:
-    None: stringコントロールへのフル パス名照会モードでは、戻り値のタイプは照会されたフラグに基づきます。
+    None: stringコントロールへのフル パス名です。照会モードでは、戻り値のタイプは照会されたフラグに基づきます。
     """
     pass
 
@@ -6618,7 +7048,7 @@ def button(actOnPress: bool = False,actionIsSubstitute: bool = False,align: str 
     -----------------------------------------
 
     Return Value:
-    None: stringコントロールへのフル パス名照会モードでは、戻り値のタイプは照会されたフラグに基づきます。
+    None: stringコントロールへのフル パス名です。照会モードでは、戻り値のタイプは照会されたフラグに基づきます。
     """
     pass
 
@@ -7164,7 +7594,7 @@ def checkBox(align: str = "",annotation: str = "",backgroundColor: Tuple[float, 
     -----------------------------------------
 
     Return Value:
-    None: stringコントロールへのフル パス名照会モードでは、戻り値のタイプは照会されたフラグに基づきます。
+    None: stringコントロールへのフル パス名です。照会モードでは、戻り値のタイプは照会されたフラグに基づきます。
     """
     pass
 
@@ -7554,7 +7984,7 @@ def checkBoxGrp(adjustableColumn: int = 1,adjustableColumn2: int = 1,adjustableC
     -----------------------------------------
 
     Return Value:
-    None: stringコントロールへのフル パス名照会モードでは、戻り値のタイプは照会されたフラグに基づきます。
+    None: stringコントロールへのフル パス名です。照会モードでは、戻り値のタイプは照会されたフラグに基づきます。
     """
     pass
 
@@ -7811,7 +8241,7 @@ def cmdScrollFieldExecuter(annotation: str = "",appendText: str = "",autoCloseBr
 
     -----------------------------------------
 
-    sourceType (string): このコマンドエクゼキュータフィールドのソースタイプを設定します。有効な値は「mel」(既定で有効)です。
+    sourceType (string): このコマンドエクゼキュータフィールドのソースタイプを設定します。有効な値は「mel」(既定で有効)と「python」です。
 
     -----------------------------------------
 
@@ -7933,7 +8363,7 @@ def cmdScrollFieldReporter(annotation: str = "",backgroundColor: Tuple[float, fl
 
     -----------------------------------------
 
-    filterSourceType (string): このコマンドレポータの表示から、指定したソースタイプをフィルタリングします。現在は「mel」、または「」（既定、「mel」と同義）のみをサポートしています。
+    filterSourceType (string): このコマンドレポータの表示から、指定したソースタイプをフィルタリングします。現在は、「mel」、「python」または「」(既定)をサポートしています。フィルタに空の文字列(「」)を設定すると、すべてのフィルタリングが除去され、「mel」と「python」の両方の結果が表示されます。
 
     -----------------------------------------
 
@@ -8063,6 +8493,144 @@ def cmdScrollFieldReporter(annotation: str = "",backgroundColor: Tuple[float, fl
 
     Return Value:
     None: stringレポータ コントロールの名前照会モードでは、戻り値のタイプは照会されたフラグに基づきます。
+    """
+    pass
+
+    
+def cmdShell(annotation: str = "",backgroundColor: Tuple[float, float, float] = tuple(1.0, 1.0, 1.0),clear: bool = False,command: str = "",defineTemplate: str = "",docTag: str = "",dragCallback: str = "",dropCallback: str = "",enable: bool = False,enableBackground: bool = False,enableKeyboardFocus: bool = False,exists: bool = False,fullPathName: bool = False,height: int = 1,highlightColor: Tuple[float, float, float] = tuple(1.0, 1.0, 1.0),isObscured: bool = False,manage: bool = False,noBackground: bool = False,numberOfHistoryLines: int = 1,numberOfPopupMenus: bool = False,numberOfSavedLines: int = 1,parent: str = "",popupMenuArray: bool = False,preventOverride: bool = False,prompt: str = "",statusBarMessage: str = "",useTemplate: str = "",visible: bool = False,visibleChangeCommand: str = "",width: int = 1) -> None:
+    """
+    このコマンドは、入力に対して UNIX シェルと同じ動作をするスクロール フィールドを作成します。-nsl/numberOfSavedLines フラグつきのフィールドで保存される行数を指定することができます。保存される既定の行数は 100 です。shellField は、コマンド ヒストリ バッファも保持します。-hlc/historyLineCount フラグで保存される入力行数を指定することができます。このバッファの既定サイズは 10 です。
+
+
+
+    -----------------------------------------
+
+    Flags:
+
+    -----------------------------------------
+    
+    annotation (string): コントロールに文字列値で注釈を付けます。
+
+    -----------------------------------------
+
+    backgroundColor ([float, float, float]): コントロールのバックグラウンドカラーです。引数は、赤、緑、青のカラー成分に対応しています。それぞれの成分の値は、0.0～1.0です。backgroundColorを設定する場合、enableBackgroundをfalseに指定していない限り、バックグラウンドは自動的に有効になります。
+
+    -----------------------------------------
+
+    clear (boolean): 表示されたテキストをすべて消去し、フィールド上部のスクロールされたテキストもすべて削除します。フィールドをクリアしたあとは、空欄になってスクロールアップして前の行を見ることができなくなります。ただし、このフラグはコマンドヒストリバッファに影響を与えません。
+
+    -----------------------------------------
+
+    command (string): 内容が変更されたときに実行されるコマンドです。
+
+    -----------------------------------------
+
+    defineTemplate (string): 他の任意のフラグと引数を解析し、かつ引数で指定したコマンドテンプレートに追加するモードに、コマンドのモードを変更します。templateNameが現在のテンプレートとして設定されていれば、その後コマンドが実行されるたびに、この引数が既定の引数として使用されます。
+
+    -----------------------------------------
+
+    docTag (string): コントロールにドキュメンテーションフラグを追加します。ドキュメンテーションフラグは、ディレクトリ構造になっています。(例:-dtrender/multiLister/createNode/material)
+
+    -----------------------------------------
+
+    dragCallback (script): 中マウスボタンを押すとコールされるコールバックを追加します。MELバージョンのコールバックの書式は次のとおりです。globalprocstring[]callbackName(string$dragControl,int$x,int$y,int$mods)procはドロップ先に転送される文字配列を返します。規則により、配列の先頭文字列はユーザ設定可能なメッセージタイプを表しています。アプリケーションで定義されたドラッグ元のコントロールは、このコールバックを無視する可能性があります。$modsで、キーモディファイアであるCTRLとSHIFTをテストできます。有効な値は、0==モディファイアなし、1==SHIFT、2==CTRL、3==CTRL+SHIFTです。Pythonでも同様ですが、コールバックの指定方法が2つあります。お勧めの方法は、引数としてPython関数オブジェクトを渡すことです。この場合、Pythonコールバックの書式は次のようになります。defcallbackName(dragControl,x,y,modifiers):この引数の値は、上記のMELバージョンの引数と同じです。Pythonでコールバックを指定するもう1つの方法では、実行する文字列を指定します。この場合、Pythonの標準的なフォーマット演算子を介して文字列に値が代入されます。このフォーマットの値は、キー「dragControl」、「x」、「y」、「modifiers」と共に辞書で渡されます。dragControlの値は文字列で、その他の値は整数です(コールバック文字列の例:「print'%(dragControl)s%(x)d%(y)d%(modifiers)d'」)。
+
+    -----------------------------------------
+
+    dropCallback (script): ドラッグ＆ドロップ操作をドロップ位置で解放したときにコールされるコールバックを追加します。MELバージョンのコールバックの書式は次のとおりです。globalproccallbackName(string$dragControl,string$dropControl,string$msgs[],int$x,int$y,int$type)procは、ドラッグ元から転送される文字配列を受け取ります。msgs配列の先頭文字列はユーザ定義のメッセージタイプを表します。アプリケーションで定義されたドロップ先のコントロールでは、このコールバックが無視されることがあります。$typeの値は、1==移動、2==コピー、3==リンクのいずれかです。Pythonでも同様ですが、コールバックの指定方法が2つあります。お勧めの方法は、引数としてPython関数オブジェクトを渡すことです。この場合、Pythonコールバックの書式は次のようになります。defpythonDropTest(dragControl,dropControl,messages,x,y,dragType):この引数の値は、上記のMELバージョンの引数と同じです。Pythonでコールバックを指定するもう1つの方法では、実行する文字列を指定します。この場合、Pythonの標準的なフォーマット演算子を介して文字列に値が代入されます。このフォーマットの値は、キー「dragControl」、「dropControl」、「messages」、「x」、「y」、「type」と共に辞書で渡されます。dragControlの値は文字列で、その他の値は整数です(コールバック文字列の例:「print'%(dragControl)s%(dropControl)s%(messages)r%(x)d%(y)d%(type)d'」)。
+
+    -----------------------------------------
+
+    enable (boolean): コントロールの有効、無効です。既定ではtrueに設定されていて、コントロールは有効になっています。falseを指定するとコントロールはグレー表示になって無効になります。
+
+    -----------------------------------------
+
+    enableBackground (boolean): コントロールのバックグラウンドカラーを有効にします。
+
+    -----------------------------------------
+
+    enableKeyboardFocus (boolean): 有効にすると、[Tab]キーを押してコントロールに移動し、キーボードで値を選択することができます。有効でない場合は、マウスのみを使用できます。このフラグは通常、編集コントロールやリストコントロールなどで既定で使用されるコントロールから、キーボードフォーカスのサポートをオフにするために使用されます。
+
+    -----------------------------------------
+
+    exists (boolean): 指定したオブジェクトが存在するかどうかを返します。他のフラグは無視されます。
+
+    -----------------------------------------
+
+    fullPathName (boolean): すべての親を含むウィジェットのフルパス名を返します。
+
+    -----------------------------------------
+
+    height (int): コントロールの高さです。コントロールは親のレイアウトの条件によって無効にされない限り、このサイズを保持しようとします。
+
+    -----------------------------------------
+
+    highlightColor ([float, float, float]): コントロールのハイライトカラーです。引数は、赤、緑、青のカラー成分に対応しています。それぞれの成分の値は、0.0～1.0です。
+
+    -----------------------------------------
+
+    isObscured (boolean): コントロールが実際に表示されるかどうかを返します。コントロールは、次の場合に隠れた状態になります。非表示の場合、別のコントロールで(完全に、または部分的に)ブロックされた場合、コントロールまたは親のレイアウトを制御できない場合、あるいはコントロールのウィンドウが非表示またはアイコン化されている場合。
+
+    -----------------------------------------
+
+    manage (boolean): コントロールの状態を管理します。管理されていないコントロールは表示されず、画面の領域も占有しません。既定では、コントロールは管理できるように作成されます。
+
+    -----------------------------------------
+
+    noBackground (boolean): コントロールのバックグラウンドをクリア/リセットします。バックグラウンドは、trueを渡すと一切描画されず、falseを渡すと描画されます。このフラグの状態は、このコントロールの子に継承されます。
+
+    -----------------------------------------
+
+    numberOfHistoryLines (int): コマンドヒストリバッファに保存される入力行数です。上下矢印キーを押すと、このバッファを1つずつ順番に選択することができます。有効な値は0～32767です。0より小さい値は0とみなされます。同様に、32767より大きな値は32767とみなされます。
+
+    -----------------------------------------
+
+    numberOfPopupMenus (boolean): このコントロールにアタッチされるポップアップメニューの数を返します。
+
+    -----------------------------------------
+
+    numberOfSavedLines (int): フィールドで記憶される行(スクロールされる行と現在表示されている行)の総数です。この行数を超える行はすべて失われ、スクロールしても表示することはできません。有効な値は1～32767です。1より小さい値は1とみなされます。同様に、32767より大きな値は32767とみなされます。
+
+    -----------------------------------------
+
+    parent (string): コントロールの親のレイアウトです。
+
+    -----------------------------------------
+
+    popupMenuArray (boolean): このコントロールにアタッチされる全ポップアップメニューの名前を返します。
+
+    -----------------------------------------
+
+    preventOverride (boolean): trueの場合、コントロールの右マウスボタンメニューを使用したコントロールアトリビュートのオーバーライドは無効になります。
+
+    -----------------------------------------
+
+    prompt (string): プロンプトとして使用されるテキストです。
+
+    -----------------------------------------
+
+    statusBarMessage (string): マウスがコントロール上にある場合にステータスバーに表示する追加の文字列です。
+
+    -----------------------------------------
+
+    useTemplate (string): コマンドに、現在のものとは異なるコマンドテンプレートを使用するように強制します。
+
+    -----------------------------------------
+
+    visible (boolean): コントロールの可視の状態です。既定では、コントロールは表示されます。コントロールの実際の外見も、その親レイアウトの可視の状態によって異なることに注意してください。
+
+    -----------------------------------------
+
+    visibleChangeCommand (script): コントロールの可視の状態が変更されたときに実行されるコマンドです。
+
+    -----------------------------------------
+
+    width (int): コントロールの幅を指定します。コントロールは親のレイアウトの条件によって無効にされない限り、このサイズを保持しようとします。
+
+    -----------------------------------------
+
+    Return Value:
+    None: stringコントロールへのフル パス名です。照会モードでは、戻り値のタイプは照会されたフラグに基づきます。
     """
     pass
 
@@ -8340,7 +8908,7 @@ def colorIndexSliderGrp(adjustableColumn: int = 1,adjustableColumn2: int = 1,adj
     -----------------------------------------
 
     Return Value:
-    None: stringコントロールへのフル パス名照会モードでは、戻り値のタイプは照会されたフラグに基づきます。
+    None: stringコントロールへのフル パス名です。照会モードでは、戻り値のタイプは照会されたフラグに基づきます。
     """
     pass
 
@@ -8888,7 +9456,7 @@ def colorSliderButtonGrp(adjustableColumn: int = 1,adjustableColumn2: int = 1,ad
     -----------------------------------------
 
     Return Value:
-    None: stringコントロールへのフル パス名照会モードでは、戻り値のタイプは照会されたフラグに基づきます。
+    None: stringコントロールへのフル パス名です。照会モードでは、戻り値のタイプは照会されたフラグに基づきます。
     """
     pass
 
@@ -9154,7 +9722,7 @@ def colorSliderGrp(adjustableColumn: int = 1,adjustableColumn2: int = 1,adjustab
     -----------------------------------------
 
     Return Value:
-    None: stringコントロールへのフル パス名照会モードでは、戻り値のタイプは照会されたフラグに基づきます。
+    None: stringコントロールへのフル パス名です。照会モードでは、戻り値のタイプは照会されたフラグに基づきます。
     """
     pass
 
@@ -9275,7 +9843,7 @@ def commandLine(annotation: str = "",backgroundColor: Tuple[float, float, float]
 
     -----------------------------------------
 
-    sourceType (string): このコマンドラインのソースタイプを設定します。現在は、「mel」をサポートしています(既定で有効)。
+    sourceType (string): このコマンドラインのソースタイプを設定します。現在は、「mel」(既定では有効)と「python」をサポートしています。
 
     -----------------------------------------
 
@@ -9597,7 +10165,7 @@ def falloffCurve(addControlVertex: str = "",annotation: str = "",asString: str =
 
     -----------------------------------------
 
-    changeCommand (script): このカーブの値が修正されたときに実行するコマンドを指定します。optionVarを指定する際には、このオプションを使用しないでください。
+    changeCommand (script): このカーブの値が修正されるたびに実行するコマンドを指定します。optionVarを指定する際には、このオプションを使用しないでください。
 
     -----------------------------------------
 
@@ -10050,7 +10618,7 @@ def floatField(annotation: str = "",backgroundColor: Tuple[float, float, float] 
     -----------------------------------------
 
     Return Value:
-    float: stringコントロールへのフル パス名照会モードでは、戻り値のタイプは照会されたフラグに基づきます。
+    float: stringコントロールへのフル パス名です。照会モードでは、戻り値のタイプは照会されたフラグに基づきます。
     """
     pass
 
@@ -10360,7 +10928,7 @@ def floatFieldGrp(adjustableColumn: int = 1,adjustableColumn2: int = 1,adjustabl
     -----------------------------------------
 
     Return Value:
-    None: stringコントロールへのフル パス名照会モードでは、戻り値のタイプは照会されたフラグに基づきます。
+    None: stringコントロールへのフル パス名です。照会モードでは、戻り値のタイプは照会されたフラグに基づきます。
     """
     pass
 
@@ -10510,7 +11078,7 @@ def floatScrollBar(annotation: str = "",backgroundColor: Tuple[float, float, flo
     -----------------------------------------
 
     Return Value:
-    float: stringコントロールへのフル パス名照会モードでは、戻り値のタイプは照会されたフラグに基づきます。
+    float: stringコントロールへのフル パス名です。照会モードでは、戻り値のタイプは照会されたフラグに基づきます。
     """
     pass
 
@@ -10656,7 +11224,7 @@ def floatSlider(annotation: str = "",backgroundColor: Tuple[float, float, float]
     -----------------------------------------
 
     Return Value:
-    float: stringコントロールへのフル パス名照会モードでは、戻り値のタイプは照会されたフラグに基づきます。
+    float: stringコントロールへのフル パス名です。照会モードでは、戻り値のタイプは照会されたフラグに基づきます。
     """
     pass
 
@@ -11132,7 +11700,7 @@ def floatSliderButtonGrp(adjustableColumn: int = 1,adjustableColumn2: int = 1,ad
     -----------------------------------------
 
     Return Value:
-    None: stringコントロールへのフル パス名照会モードでは、戻り値のタイプは照会されたフラグに基づきます。
+    None: stringコントロールへのフル パス名です。照会モードでは、戻り値のタイプは照会されたフラグに基づきます。
     """
     pass
 
@@ -12399,7 +12967,7 @@ def iconTextButton(align: str = "",annotation: str = "",backgroundColor: Tuple[f
 
     -----------------------------------------
 
-    sourceType (string): コマンドスクリプトの言語タイプを設定します。c/commandやdcc/doubleClickCommandフラグと一緒にのみ使用できます。有効な値は「mel」です。
+    sourceType (string): コマンドスクリプトの言語タイプを設定します。c/commandやdcc/doubleClickCommandフラグと一緒にのみ使用できます。有効な値は「mel」(既定で有効)と「python」です。
 
     -----------------------------------------
 
@@ -12670,7 +13238,7 @@ def iconTextCheckBox(align: str = "",annotation: str = "",backgroundColor: Tuple
     -----------------------------------------
 
     Return Value:
-    None: stringコントロールへのフル パス名照会モードでは、戻り値のタイプは照会されたフラグに基づきます。
+    None: stringコントロールへのフル パス名です。照会モードでは、戻り値のタイプは照会されたフラグに基づきます。
     """
     pass
 
@@ -13152,7 +13720,7 @@ def iconTextScrollList(allowMultiSelection: bool = False,annotation: str = "",ap
     -----------------------------------------
 
     Return Value:
-    None: stringコントロールへのフル パス名照会モードでは、戻り値のタイプは照会されたフラグに基づきます。
+    None: stringコントロールへのフル パス名です。照会モードでは、戻り値のタイプは照会されたフラグに基づきます。
     """
     pass
 
@@ -13630,7 +14198,7 @@ def intField(annotation: str = "",backgroundColor: Tuple[float, float, float] = 
     -----------------------------------------
 
     Return Value:
-    None: stringコントロールへのフル パス名照会モードでは、戻り値のタイプは照会されたフラグに基づきます。
+    None: stringコントロールへのフル パス名です。照会モードでは、戻り値のタイプは照会されたフラグに基づきます。
     """
     pass
 
@@ -13928,7 +14496,7 @@ def intFieldGrp(adjustableColumn: int = 1,adjustableColumn2: int = 1,adjustableC
     -----------------------------------------
 
     Return Value:
-    None: stringコントロールへのフル パス名照会モードでは、戻り値のタイプは照会されたフラグに基づきます。
+    None: stringコントロールへのフル パス名です。照会モードでは、戻り値のタイプは照会されたフラグに基づきます。
     """
     pass
 
@@ -14078,7 +14646,7 @@ def intScrollBar(annotation: str = "",backgroundColor: Tuple[float, float, float
     -----------------------------------------
 
     Return Value:
-    None: stringコントロールへのフル パス名照会モードでは、戻り値のタイプは照会されたフラグに基づきます。
+    None: stringコントロールへのフル パス名です。照会モードでは、戻り値のタイプは照会されたフラグに基づきます。
     """
     pass
 
@@ -14224,7 +14792,7 @@ def intSlider(annotation: str = "",backgroundColor: Tuple[float, float, float] =
     -----------------------------------------
 
     Return Value:
-    None: stringコントロールへのフル パス名照会モードでは、戻り値のタイプは照会されたフラグに基づきます。
+    None: stringコントロールへのフル パス名です。照会モードでは、戻り値のタイプは照会されたフラグに基づきます。
     """
     pass
 
@@ -14708,7 +15276,7 @@ def layerButton(annotation: str = "",backgroundColor: Tuple[float, float, float]
     -----------------------------------------
 
     Return Value:
-    None: stringコントロールへのフル パス名照会モードでは、戻り値のタイプは照会されたフラグに基づきます。
+    None: stringコントロールへのフル パス名です。照会モードでは、戻り値のタイプは照会されたフラグに基づきます。
     """
     pass
 
@@ -14964,7 +15532,7 @@ def nameField(annotation: str = "",backgroundColor: Tuple[float, float, float] =
     -----------------------------------------
 
     Return Value:
-    None: stringコントロールへのフル パス名照会モードでは、戻り値のタイプは照会されたフラグに基づきます。
+    None: stringコントロールへのフル パス名です。照会モードでは、戻り値のタイプは照会されたフラグに基づきます。
     """
     pass
 
@@ -15154,7 +15722,7 @@ def nodeTreeLister(addFavorite: str = "",addItem: Tuple[str, str, str] = tuple("
     -----------------------------------------
 
     Return Value:
-    None: string作成したコントロールの名前照会モードでは、戻り値のタイプは照会されたフラグに基づきます。
+    None: string作成したコントロールの名前。照会モードでは、戻り値のタイプは照会されたフラグに基づきます。
     """
     pass
 
@@ -15604,7 +16172,7 @@ def progressBar(annotation: str = "",backgroundColor: Tuple[float, float, float]
     -----------------------------------------
 
     Return Value:
-    None: stringコントロールへのフル パス名照会モードでは、戻り値のタイプは照会されたフラグに基づきます。
+    None: stringコントロールへのフル パス名です。照会モードでは、戻り値のタイプは照会されたフラグに基づきます。
     """
     pass
 
@@ -15762,7 +16330,7 @@ def radioButton(align: str = "",annotation: str = "",backgroundColor: Tuple[floa
     -----------------------------------------
 
     Return Value:
-    None: stringコントロールへのフル パス名照会モードでは、戻り値のタイプは照会されたフラグに基づきます。
+    None: stringコントロールへのフル パス名です。照会モードでは、戻り値のタイプは照会されたフラグに基づきます。
     """
     pass
 
@@ -16168,7 +16736,7 @@ def radioButtonGrp(adjustableColumn: int = 1,adjustableColumn2: int = 1,adjustab
     -----------------------------------------
 
     Return Value:
-    None: stringコントロールへのフル パス名照会モードでは、戻り値のタイプは照会されたフラグに基づきます。
+    None: stringコントロールへのフル パス名です。照会モードでは、戻り値のタイプは照会されたフラグに基づきます。
     """
     pass
 
@@ -16780,7 +17348,7 @@ def scrollField(annotation: str = "",backgroundColor: Tuple[float, float, float]
     -----------------------------------------
 
     Return Value:
-    None: stringコントロールへのフル パス名照会モードでは、戻り値のタイプは照会されたフラグに基づきます。
+    None: stringコントロールへのフル パス名です。照会モードでは、戻り値のタイプは照会されたフラグに基づきます。
     """
     pass
 
@@ -16906,7 +17474,7 @@ def separator(annotation: str = "",backgroundColor: Tuple[float, float, float] =
     -----------------------------------------
 
     Return Value:
-    None: stringコントロールへのフル パス名照会モードでは、戻り値のタイプは照会されたフラグに基づきます。
+    None: stringコントロールへのフル パス名です。照会モードでは、戻り値のタイプは照会されたフラグに基づきます。
     """
     pass
 
@@ -17135,7 +17703,7 @@ def shelfButton(align: str = "",annotation: str = "",backgroundColor: Tuple[floa
 
     -----------------------------------------
 
-    sourceType (string): コマンドスクリプトの言語タイプを設定します。c/commandやdcc/doubleClickCommandフラグと一緒にのみ使用できます。有効な値は「mel」です。
+    sourceType (string): コマンドスクリプトの言語タイプを設定します。c/commandやdcc/doubleClickCommandフラグと一緒にのみ使用できます。有効な値は「mel」(既定で有効)と「python」です。
 
     -----------------------------------------
 
@@ -17748,7 +18316,7 @@ def symbolButton(annotation: str = "",backgroundColor: Tuple[float, float, float
     -----------------------------------------
 
     Return Value:
-    None: stringコントロールへのフル パス名照会モードでは、戻り値のタイプは照会されたフラグに基づきます。
+    None: stringコントロールへのフル パス名です。照会モードでは、戻り値のタイプは照会されたフラグに基づきます。
     """
     pass
 
@@ -17914,7 +18482,7 @@ def symbolCheckBox(annotation: str = "",backgroundColor: Tuple[float, float, flo
     -----------------------------------------
 
     Return Value:
-    None: stringコントロールへのフル パス名照会モードでは、戻り値のタイプは照会されたフラグに基づきます。
+    None: stringコントロールへのフル パス名です。照会モードでは、戻り値のタイプは照会されたフラグに基づきます。
     """
     pass
 
@@ -18060,7 +18628,7 @@ def text(align: str = "",annotation: str = "",backgroundColor: Tuple[float, floa
     -----------------------------------------
 
     Return Value:
-    None: stringコントロールへのフル パス名照会モードでは、戻り値のタイプは照会されたフラグに基づきます。
+    None: stringコントロールへのフル パス名です。照会モードでは、戻り値のタイプは照会されたフラグに基づきます。
     """
     pass
 
@@ -18246,7 +18814,7 @@ def textField(alwaysInvokeEnterCommandOnReturn: bool = False,annotation: str = "
     -----------------------------------------
 
     Return Value:
-    None: stringコントロールへのフル パス名照会モードでは、戻り値のタイプは照会されたフラグに基づきます。
+    None: stringコントロールへのフル パス名です。照会モードでは、戻り値のタイプは照会されたフラグに基づきます。
     """
     pass
 
@@ -18540,7 +19108,7 @@ def textFieldButtonGrp(adjustableColumn: int = 1,adjustableColumn2: int = 1,adju
     -----------------------------------------
 
     Return Value:
-    None: stringコントロールへのフル パス名照会モードでは、戻り値のタイプは照会されたフラグに基づきます。
+    None: stringコントロールへのフル パス名です。照会モードでは、戻り値のタイプは照会されたフラグに基づきます。
     """
     pass
 
@@ -18822,7 +19390,7 @@ def textFieldGrp(adjustableColumn: int = 1,adjustableColumn2: int = 1,adjustable
     -----------------------------------------
 
     Return Value:
-    None: stringコントロールへのフル パス名照会モードでは、戻り値のタイプは照会されたフラグに基づきます。
+    None: stringコントロールへのフル パス名です。照会モードでは、戻り値のタイプは照会されたフラグに基づきます。
     """
     pass
 
@@ -19036,12 +19604,12 @@ def textScrollList(allItems: bool = False,allowAutomaticSelection: bool = False,
     -----------------------------------------
 
     Return Value:
-    None: stringコントロールへのフル パス名照会モードでは、戻り値のタイプは照会されたフラグに基づきます。
+    None: stringコントロールへのフル パス名です。照会モードでは、戻り値のタイプは照会されたフラグに基づきます。
     """
     pass
 
     
-def timeControl(animCurveNames: bool = False,animLayerFilterOptions: str = "",animLayerShowWeight: bool = False,annotation: str = "",backgroundColor: Tuple[float, float, float] = tuple(1.0, 1.0, 1.0),beginScrub: bool = False,currentFrameColor: Tuple[float, float, float, float] = tuple(1.0, 1.0, 1.0, 1.0),defineTemplate: str = "",displaySound: bool = False,docTag: str = "",dragCallback: str = "",dropCallback: str = "",enable: bool = False,enableBackground: bool = False,enableKeyboardFocus: bool = False,endScrub: bool = False,exists: bool = False,forceRedraw: bool = False,forceRefresh: bool = False,foregroundColor: Tuple[float, float, float] = tuple(1.0, 1.0, 1.0),fullPathName: bool = False,globalTime: bool = False,height: int = 1,highlightColor: Tuple[float, float, float] = tuple(1.0, 1.0, 1.0),isObscured: bool = False,mainListConnection: str = "",manage: bool = False,noBackground: bool = False,numberOfPopupMenus: bool = False,parent: str = "",popupMenuArray: bool = False,pressCommand: str = "",preventOverride: bool = False,range: bool = False,rangeArray: bool = False,rangeVisible: bool = False,releaseCommand: str = "",repeatChunkSize: float = 1.0,repeatOnHold: bool = False,resample: bool = False,showKeys: str = "",showKeysCombined: bool = False,snap: bool = False,sound: str = "",statusBarMessage: str = "",tickSize: int = 1,tickSpan: int = 1,useTemplate: str = "",visible: bool = False,visibleChangeCommand: str = "",waveform: str = "",width: int = 1) -> None:
+def timeControl(animCurveNames: bool = False,animLayerFilterOptions: str = "",animLayerShowWeight: bool = False,annotation: str = "",backgroundColor: Tuple[float, float, float] = tuple(1.0, 1.0, 1.0),beginScrub: bool = False,currentFrameColor: Tuple[float, float, float, float] = tuple(1.0, 1.0, 1.0, 1.0),defineTemplate: str = "",displaySound: bool = False,docTag: str = "",dragCallback: str = "",dropCallback: str = "",enable: bool = False,enableBackground: bool = False,enableKeyboardFocus: bool = False,endScrub: bool = False,exists: bool = False,forceRedraw: bool = False,forceRefresh: bool = False,foregroundColor: Tuple[float, float, float] = tuple(1.0, 1.0, 1.0),fullPathName: bool = False,globalTime: bool = False,greasePencilSequenceNames: bool = False,height: int = 1,highlightColor: Tuple[float, float, float] = tuple(1.0, 1.0, 1.0),isObscured: bool = False,mainListConnection: str = "",manage: bool = False,noBackground: bool = False,numberOfPopupMenus: bool = False,parent: str = "",popupMenuArray: bool = False,pressCommand: str = "",preventOverride: bool = False,range: bool = False,rangeArray: bool = False,rangeVisible: bool = False,releaseCommand: str = "",repeatChunkSize: float = 1.0,repeatOnHold: bool = False,resample: bool = False,showGreaseFrames: str = "",showKeys: str = "",showKeysCombined: bool = False,snap: bool = False,sound: str = "",statusBarMessage: str = "",tickSize: int = 1,tickSpan: int = 1,useTemplate: str = "",visible: bool = False,visibleChangeCommand: str = "",waveform: str = "",width: int = 1) -> None:
     """
     このコマンドは、現在のタイムを変更したり、キーフレームを表示/編集したり、サウンドを表示/編集したりできるコントロールを作成します。注: 作成できる timeControl は 1 つのみです。起動時に Maya が作成する timeControl は、グローバル文字列変数 $gPlayBackSlider からアクセスできます。また、timeControl を削除してはいけません。
 
@@ -19141,6 +19709,10 @@ def timeControl(animCurveNames: bool = False,animLayerFilterOptions: str = "",an
 
     -----------------------------------------
 
+    greasePencilSequenceNames (boolean): タイムラインに表示されているフレームのあるすべてのグリースペンシルシーケンスの名前を返します。照会すると、string[]を返します。
+
+    -----------------------------------------
+
     height (int): コントロールの高さです。コントロールは親のレイアウトの条件によって無効にされない限り、このサイズを保持しようとします。
 
     -----------------------------------------
@@ -19210,6 +19782,10 @@ def timeControl(animCurveNames: bool = False,animLayerFilterOptions: str = "",an
     -----------------------------------------
 
     resample (boolean): ウィジェットに適合するように、サウンド表示を再びサンプリングします。
+
+    -----------------------------------------
+
+    showGreaseFrames (string): 「active」にすると、アクティブなカメラのグリースフレームが表示されます。「none」にすると、グリースフレームは表示されません。「all」にすると、すべてのグリースフレームが表示されます。既定は「active」です。照会すると、このフラグはstringを返します。
 
     -----------------------------------------
 
@@ -19412,7 +19988,7 @@ def timeField(annotation: str = "",backgroundColor: Tuple[float, float, float] =
     -----------------------------------------
 
     Return Value:
-    None: stringコントロールへのフル パス名照会モードでは、戻り値のタイプは照会されたフラグに基づきます。
+    None: stringコントロールへのフル パス名です。照会モードでは、戻り値のタイプは照会されたフラグに基づきます。
     """
     pass
 
@@ -19718,7 +20294,7 @@ def timeFieldGrp(adjustableColumn: int = 1,adjustableColumn2: int = 1,adjustable
     -----------------------------------------
 
     Return Value:
-    None: stringコントロールへのフル パス名照会モードでは、戻り値のタイプは照会されたフラグに基づきます。
+    None: stringコントロールへのフル パス名です。照会モードでは、戻り値のタイプは照会されたフラグに基づきます。
     """
     pass
 
@@ -20547,7 +21123,7 @@ def treeView(addItem: Tuple[str, str] = tuple("", ""),allowDragAndDrop: bool = F
 
     -----------------------------------------
 
-    labelBackgroundColor ([string, float, float, float]): ツリー内の特定項目のテキストラベルにバックグランドカラーを設定します。最初のパラメータはレイヤを指定します。バックグラウンドを「transparent」の既定値復元するには、(-1.0,-1.0,-1.0)を設定します。
+    labelBackgroundColor ([string, float, float, float]): ツリー内の特定項目のテキストラベルにバックグラウンドカラーを設定します。最初のパラメータはレイヤを指定します。バックグラウンドを「transparent」の既定値復元するには、(-1.0,-1.0,-1.0)を設定します。
 
     -----------------------------------------
 
@@ -20806,7 +21382,7 @@ def columnLayout(adjustableColumn: bool = False,annotation: str = "",backgroundC
     -----------------------------------------
 
     Return Value:
-    None: stringコントロールへのフル パス名照会モードでは、戻り値のタイプは照会されたフラグに基づきます。
+    None: stringコントロールへのフル パス名です。照会モードでは、戻り値のタイプは照会されたフラグに基づきます。
     """
     pass
 
@@ -20992,7 +21568,7 @@ def dockControl(allowedArea: str = "",annotation: str = "",area: str = "",backgr
     -----------------------------------------
 
     Return Value:
-    None: stringコントロールへのフル パス名照会モードでは、戻り値のタイプは照会されたフラグに基づきます。
+    None: stringコントロールへのフル パス名です。照会モードでは、戻り値のタイプは照会されたフラグに基づきます。
     """
     pass
 
@@ -21134,7 +21710,7 @@ def flowLayout(annotation: str = "",backgroundColor: Tuple[float, float, float] 
     -----------------------------------------
 
     Return Value:
-    None: stringコントロールへのフル パス名照会モードでは、戻り値のタイプは照会されたフラグに基づきます。
+    None: stringコントロールへのフル パス名です。照会モードでは、戻り値のタイプは照会されたフラグに基づきます。
     """
     pass
 
@@ -21317,7 +21893,7 @@ def frameLayout(annotation: str = "",backgroundColor: Tuple[float, float, float]
 
     -----------------------------------------
 
-    borderStyle (string): このフラグは現在サポートしていません。境界線のスタイルはサポートされなくなりました。このフラグを使用すると警告が表示されます。
+    borderStyle (string): このフラグは現在サポートされていません。境界線のスタイルはサポートされなくなりました。このフラグを使用すると警告が表示されます。
 
     -----------------------------------------
 
@@ -21482,7 +22058,7 @@ def frameLayout(annotation: str = "",backgroundColor: Tuple[float, float, float]
     -----------------------------------------
 
     Return Value:
-    None: stringコントロールへのフル パス名照会モードでは、戻り値のタイプは照会されたフラグに基づきます。
+    None: stringコントロールへのフル パス名です。照会モードでは、戻り値のタイプは照会されたフラグに基づきます。
     """
     pass
 
@@ -21652,7 +22228,7 @@ def gridLayout(allowEmptyCells: bool = False,annotation: str = "",autoGrow: bool
     -----------------------------------------
 
     Return Value:
-    None: stringコントロールへのフル パス名照会モードでは、戻り値のタイプは照会されたフラグに基づきます。
+    None: stringコントロールへのフル パス名です。照会モードでは、戻り値のタイプは照会されたフラグに基づきます。
     """
     pass
 
@@ -21920,7 +22496,7 @@ def menuBarLayout(annotation: str = "",backgroundColor: Tuple[float, float, floa
     -----------------------------------------
 
     Return Value:
-    None: stringコントロールへのフル パス名照会モードでは、戻り値のタイプは照会されたフラグに基づきます。
+    None: stringコントロールへのフル パス名です。照会モードでは、戻り値のタイプは照会されたフラグに基づきます。
     """
     pass
 
@@ -22110,7 +22686,7 @@ def paneLayout(activeFrameThickness: int = 1,activePane: str = "",activePaneInde
     -----------------------------------------
 
     Return Value:
-    None: stringコントロールへのフル パス名照会モードでは、戻り値のタイプは照会されたフラグに基づきます。
+    None: stringコントロールへのフル パス名です。照会モードでは、戻り値のタイプは照会されたフラグに基づきます。
     """
     pass
 
@@ -22288,7 +22864,7 @@ def rowColumnLayout(adjustableColumn: int = 1,annotation: str = "",backgroundCol
     -----------------------------------------
 
     Return Value:
-    None: stringコントロールへのフル パス名照会モードでは、戻り値のタイプは照会されたフラグに基づきます。
+    None: stringコントロールへのフル パス名です。照会モードでは、戻り値のタイプは照会されたフラグに基づきます。
     """
     pass
 
@@ -22558,7 +23134,7 @@ def rowLayout(adjustableColumn: int = 1,adjustableColumn1: int = 1,adjustableCol
     -----------------------------------------
 
     Return Value:
-    None: stringコントロールへのフル パス名照会モードでは、戻り値のタイプは照会されたフラグに基づきます。
+    None: stringコントロールへのフル パス名です。照会モードでは、戻り値のタイプは照会されたフラグに基づきます。
     """
     pass
 
@@ -22736,7 +23312,7 @@ def scrollLayout(annotation: str = "",backgroundColor: Tuple[float, float, float
     -----------------------------------------
 
     Return Value:
-    None: stringコントロールへのフル パス名照会モードでは、戻り値のタイプは照会されたフラグに基づきます。
+    None: stringコントロールへのフル パス名です。照会モードでは、戻り値のタイプは照会されたフラグに基づきます。
     """
     pass
 
@@ -23370,7 +23946,7 @@ def tabLayout(annotation: str = "",backgroundColor: Tuple[float, float, float] =
     -----------------------------------------
 
     Return Value:
-    None: stringコントロールへのフル パス名照会モードでは、戻り値のタイプは照会されたフラグに基づきます。
+    None: stringコントロールへのフル パス名です。照会モードでは、戻り値のタイプは照会されたフラグに基づきます。
     """
     pass
 
@@ -23504,7 +24080,7 @@ def toolBar(allowedArea: str = "",annotation: str = "",area: str = "",background
     -----------------------------------------
 
     Return Value:
-    None: stringコントロールへのフル パス名照会モードでは、戻り値のタイプは照会されたフラグに基づきます。
+    None: stringコントロールへのフル パス名です。照会モードでは、戻り値のタイプは照会されたフラグに基づきます。
     """
     pass
 
@@ -23670,7 +24246,7 @@ def workspaceControl(checksPlugins: bool = False,close: bool = False,closeComman
     -----------------------------------------
 
     Return Value:
-    None: stringコントロールへのフル パス名照会モードでは、戻り値のタイプは照会されたフラグに基づきます。
+    None: stringコントロールへのフル パス名です。照会モードでは、戻り値のタイプは照会されたフラグに基づきます。
     """
     pass
 
@@ -25158,7 +25734,7 @@ def optionMenu(alwaysCallChangeCommand: bool = False,annotation: str = "",backgr
     -----------------------------------------
 
     Return Value:
-    None: stringコントロールへのフル パス名照会モードでは、戻り値のタイプは照会されたフラグに基づきます。
+    None: stringコントロールへのフル パス名です。照会モードでは、戻り値のタイプは照会されたフラグに基づきます。
     """
     pass
 

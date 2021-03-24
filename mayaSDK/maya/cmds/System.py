@@ -115,6 +115,40 @@ def autoSave(destination: int = 1,destinationFolder: bool = False,enable: bool =
     pass
 
     
+def cmdFileOutput(close: int = 1,closeAll: bool = False,open: str = "",status: int = 1) -> None:
+    """
+    このコマンドは、通常はスクリプト エディタ(Script Editor)ウィンドウまたはコンソールに出力されるコマンドと結果をすべて受信したテキスト ファイルを開きます。このファイルは、正しいファイル記述子と -close、または -closeAll が明示的に指定されるまで、開いたままになります。したがって、不必要にファイルを開いたままにしないようにする必要があります。
+
+
+
+    -----------------------------------------
+
+    Flags:
+
+    -----------------------------------------
+    
+    close (uint): 指定した記述子に対応するファイルを閉じます。ファイルが存在しなければ、-3が返されます。エラーの場合-1、正常に閉じたら0が返されます。
+
+    -----------------------------------------
+
+    closeAll (boolean): 開いているファイルをすべて閉じます。
+
+    -----------------------------------------
+
+    open (string): 指定した書き込み用のファイルを開きます(書き込み可能な該当するファイルがあれば、上書きされます)。正常に開けば、値が返されてステータスが照会されファイルが閉じます。ファイルを開いて書き込むことができない場合、-1が返されます。-openフラグは、照会モードでも指定できます。照会モードでは、指定ファイルが開いている場合はその記述子が、開いていない場合は-1が返されます。この方法を使用すると、特定のファイルが開いているかどうかを簡単に確認できます。照会モードでは、このフラグに値が必要になります。
+
+    -----------------------------------------
+
+    status (uint): 指定した記述子のステータスを照会します。該当するファイルがなければ-3が、ファイルが開かなければ-2が、エラーが発生すれば-1が、ファイルが書き込みできる状態であれば0が返されます。
+
+    -----------------------------------------
+
+    Return Value:
+    None: int: 開いているときに、ステータスを照会またはファイルを閉じるのに使用する値(記述子)を返します。それ以外の場合は、ファイルのステータスを示すステータス コードを返します。照会モードでは、戻り値のタイプは照会されたフラグに基づきます。
+    """
+    pass
+
+    
 def dirmap(convertDirectory: str = "",enable: bool = False,getAllMappings: bool = False,getMappedDirectory: str = "",mapDirectory: Tuple[str, str] = tuple("", ""),unmapDirectory: str = "") -> None:
     """
     ディレクトリを別のディレクトリにマップするために使用します。最初の引数はマッピング元のディレクトリで、2 番目の引数はマッピング先の目的ディレクトリです。
@@ -157,6 +191,88 @@ def dirmap(convertDirectory: str = "",enable: bool = False,getAllMappings: bool 
     pass
 
     
+def exportEdits(excludeHierarchy: bool = False,excludeNode: str = "",exportSelected: bool = False,force: bool = False,includeAnimation: bool = False,includeConstraints: bool = False,includeDeformers: bool = False,includeNetwork: bool = False,includeNode: str = "",includeSetAttrs: bool = False,includeSetDrivenKeys: bool = False,includeShaders: bool = False,selected: bool = False,type: str = "",editCommand: str = "",onReferenceNode: str = "") -> None:
+    """
+    このコマンドは、シーンに行われた編集をファイルに書き出します。書き出されたファイルは、後で別のシーンに読み込みできます。書き出される編集には次のものが含まれます: ノード、接続、リファレンスの値の変更などの編集。書き出されたファイルに含まれるノードは、使用オプションに基づきます。書き出されるファイルに、ターゲット ノードのセットを記述するオプション フラグが最低 1 つは含まれるよう指定する必要があります(例: 「selected」、「onReferenceNode」)。算入フラグ(「includeAnimation」、「includeShaders」、「includeNetwork」)を使用して、書き出しリストに追加される関連ノードを指定します。書き出しモードでコマンドが正常に完了した場合、書き出されたファイルの名前を返します。照会モードでは、このコマンドは書き出すファイルの内容に関する情報を返します。照会モードでは、指定したフラグに基づいて、書き出すファイルに含めることができるノードのリストを返します。
+
+
+
+    -----------------------------------------
+
+    Flags:
+
+    -----------------------------------------
+    
+    excludeHierarchy (boolean): 既定では、すべてのDAGの親とDAGのヒストリが書き出しファイルに書き込まれます。ターゲットノードに接続していないDAGリレーションを含めないようにするには、-excludeHierarchyフラグを指定します。
+
+    -----------------------------------------
+
+    excludeNode (string): 書き出されるノードのリストにノードが含まれないようにします。このフラグは、書き出される可能性のある特定のシーンノードを除外するのに便利です。同一名のMayaノードが複数ある場合は、ノードを一意に識別するためにDAGパスを指定できます。
+
+    -----------------------------------------
+
+    exportSelected (boolean): 選択したノードとその相互接続が書き出されます。また、書き出されないノードに付随する接続も書き出されます。既定のノードは無視され、書き出されません。exportSelectedフラグの使用時は、選択したノードのみが書き出され、-includeHierarchyのような-include/-excludeフラグは無視されることに注意してください。
+
+    -----------------------------------------
+
+    force (boolean): 書き出しアクションを強制的に実行させます。このフラグは既存ファイルの上書きに必要です。
+
+    -----------------------------------------
+
+    includeAnimation (boolean): さらに、書き出されるターゲットノードに関連するアニメーションノードとアニメーションヘルパノードを含みます。
+
+    -----------------------------------------
+
+    includeConstraints (boolean): さらに、書き出されるターゲットノードに関連するコンストレイント関連のノードを含みます。
+
+    -----------------------------------------
+
+    includeDeformers (boolean): さらに、書き出されるターゲットノードに関連するデフォーマのネットワークを含みます。
+
+    -----------------------------------------
+
+    includeNetwork (boolean): さらに、書き出されるターゲットノードに接続されたノードのネットワークを含みます。
+
+    -----------------------------------------
+
+    includeNode (string): さらに、書き出されるノードのリストに指定したノードを含みます。同一名のMayaノードが複数ある場合は、ノードを一意に識別するためにDAGパスを指定できます。
+
+    -----------------------------------------
+
+    includeSetAttrs (boolean): -selected/-selフラグ使用時に選択したノードのいずれかが参照される場合、そのノードにある任意のsetAttr編集を含めるか、除外します。-onReferenceNode/-ornフラグと一緒に使用する場合は、リファレンスにある任意のsetAttr編集を含めるか、除外します。
+
+    -----------------------------------------
+
+    includeSetDrivenKeys (boolean): さらに、書き出されるターゲットノードに関連するsetDrivenKey関連のノードを含みます。
+
+    -----------------------------------------
+
+    includeShaders (boolean): 書き出されるターゲットノードに関連するシェーダを含みます。
+
+    -----------------------------------------
+
+    selected (boolean): 現在選択されているノードのリストを書き出します。このフラグは、選択したノードが書き出されないexportSelectedフラグとは異なり、編集されたノード、includeフラグを使用して検索されたノード(例:includeAnimation、includeNetworkなど)のみが書き出されます。
+
+    -----------------------------------------
+
+    type (string): 書き出すファイルのタイプを設定します。有効な値は「editMA」または「editMB」です。このコマンドは、fileコマンドのdefaultExtensionsオプションで制御されるファイル命名用のグローバルな「defaultExtensions」設定を優先するのでご注意ください。詳細については、fileコマンドを参照してください。
+
+    -----------------------------------------
+
+    editCommand (string): コマンドが考慮するべくリファレンスの編集のタイプを示すための二次フラグです。このフラグが指定されない場合、すべてのタイプの編集が含まれます。このフラグには文字列パラメータが必要です。有効な値は、「addAttr」、「connectAttr」、「deleteAttr」、「disconnectAttr」、「parent」、「setAttr」、「lock」、および「unlock」です。状況によっては、このフラグを複数回指定して、複数の編集タイプを考慮するように指定できます。
+
+    -----------------------------------------
+
+    onReferenceNode (string): 指定したリファレンスノードに格納された編集のみを考慮することを示すための二次フラグです。このフラグは、「exportEdits」コマンドによる指定時のみ複数使用が可能です。
+
+    -----------------------------------------
+
+    Return Value:
+    None: string[]照会実行用。照会モードでは、戻り値のタイプは照会されたフラグに基づきます。
+    """
+    pass
+
+    
 def file(activate: bool = False,activeProxy: bool = False,add: bool = False,anyModified: bool = False,applyTo: str = "",buildLoadSettings: bool = False,channels: bool = False,cleanReference: str = "",command: Tuple[str, str] = tuple("", ""),compress: bool = False,constraints: bool = False,constructionHistory: bool = False,copyNumberList: bool = False,defaultExtensions: bool = False,defaultNamespace: bool = False,deferReference: bool = False,editCommand: str = "",errorStatus: bool = False,executeScriptNodes: bool = False,exists: bool = False,expandName: bool = False,exportAll: bool = False,exportAnim: bool = False,exportAnimFromReference: bool = False,exportAsReference: bool = False,exportAsSegment: bool = False,exportSelected: bool = False,exportSelectedAnim: bool = False,exportSelectedAnimFromReference: bool = False,exportSelectedNoReference: bool = False,exportSelectedStrict: bool = False,exportUnloadedReferences: bool = False,expressions: bool = False,fileMetaData: bool = False,flushReference: str = "",force: bool = False,groupLocator: bool = False,groupName: str = "",groupReference: bool = False,ignoreVersion: bool = False,i: bool = False,importFrameRate: bool = False,importReference: bool = False,importTimeRange: str = "",lastFileOption: bool = False,lastTempFile: bool = False,list: bool = False,loadAllDeferred: bool = False,loadAllReferences: bool = False,loadNoReferences: bool = False,loadReference: str = "",loadReferenceDepth: str = "",loadReferencePreview: str = "",loadSettings: str = "",location: bool = False,lockContainerUnpublished: bool = False,lockFile: bool = False,lockReference: bool = False,mapPlaceHolderNamespace: Tuple[str, str] = tuple("", ""),mergeNamespaceWithParent: bool = False,mergeNamespaceWithRoot: bool = False,mergeNamespacesOnClash: bool = False,modified: bool = False,moveSelected: bool = False,namespace: str = "",newFile: bool = False,open: bool = False,options: str = "",parentNamespace: bool = False,postSaveScript: str = "",preSaveScript: str = "",preserveName: bool = False,preserveReferences: bool = False,preview: bool = False,prompt: bool = False,proxyManager: str = "",proxyTag: str = "",reference: bool = False,referenceDepthInfo: int = 1,referenceNode: str = "",relativeNamespace: str = "",removeDuplicateNetworks: bool = False,removeReference: bool = False,rename: str = "",renameAll: bool = False,renameToSave: bool = False,renamingPrefix: str = "",renamingPrefixList: bool = False,replaceName: Tuple[str, str] = tuple("", ""),resetError: bool = False,returnNewNodes: bool = False,save: bool = False,saveDiskCache: str = "",saveReference: bool = False,saveReferencesUnloaded: bool = False,saveTextures: str = "",sceneName: bool = False,segment: str = "",selectAll: bool = False,shader: bool = False,sharedNodes: str = "",sharedReferenceFile: bool = False,shortName: bool = False,strict: bool = False,swapNamespace: Tuple[str, str] = tuple("", ""),type: str = "",uiConfiguration: bool = False,unloadReference: str = "",unresolvedName: bool = False,usingNamespaces: bool = False,withoutCopyNumber: bool = False,writable: bool = False) -> None:
     """
     ファイルのオープン、読み込み、書き出し、参照、保存、名前変更を行う
@@ -169,7 +285,7 @@ def file(activate: bool = False,activeProxy: bool = False,add: bool = False,anyM
 
     -----------------------------------------
     
-    activate (boolean): このフラグは現在サポートしていません。
+    activate (boolean): このフラグは現在サポートされていません。
 
     -----------------------------------------
 
@@ -181,7 +297,7 @@ def file(activate: bool = False,activeProxy: bool = False,add: bool = False,anyM
 
     -----------------------------------------
 
-    anyModified (boolean): このフラグは現在サポートしていません。代わりにfile-q-modifiedを使用してください。
+    anyModified (boolean): このフラグは現在サポートされていません。代わりにfile-q-modifiedを使用してください。
 
     -----------------------------------------
 
@@ -257,7 +373,7 @@ def file(activate: bool = False,activeProxy: bool = False,add: bool = False,anyM
 
     -----------------------------------------
 
-    exportAnim (boolean): シーン内のすべてのオブジェクトのすべてのアニメーションノードとアニメーションヘルパノードを書き出します。生成されたアニメーションの書き出しファイルには、アニメーションファイルには含まれていないオブジェクトへの接続が含まれています。このため、このファイルを読み込みまたは参照するには、同じ名前のオブジェクトが表示されるように指定する必要があります。そうしないと、エラーが発生します。-sns/swapNamespaceフラグは、指定したオブジェクトのネームスペースを別のネームスペースと入れ替えるために使用できます。このネームスペースは、一貫した命名規則を使用してアニメーションファイルの対象を複数にするために利用できます。exportAnimフラグではアニメーションレイヤは書き出されません。animLayersおよびその他のノードタイプの一般的なファイル書き出しには、レイヤの書き出し機能を使用します。
+    exportAnim (boolean): シーン内のすべてのオブジェクトのすべてのアニメーションノードとアニメーションヘルパノードを書き出します。生成されたアニメーションの書き出しファイルには、アニメーションファイルには含まれていないオブジェクトへの接続が含まれています。このため、このファイルを読み込みまたは参照するには、同じ名前のオブジェクトが表示されるように指定する必要があります。そうしないと、エラーが発生します。-sns/swapNamespaceフラグは、指定したオブジェクトのネームスペースを別のネームスペースと入れ替えるために使用できます。このネームスペースは、一貫した命名規則を使用してアニメーションファイルの対象を複数にするために利用できます。exportAnimフラグではアニメーションレイヤは書き出されません。animLayersおよびその他のタイプのノードの一般的な書き出しについては、exportEditsコマンドを参照するか、レイヤの書き出し(ExportLayers)機能を使用してください。
 
     -----------------------------------------
 
@@ -269,7 +385,7 @@ def file(activate: bool = False,activeProxy: bool = False,add: bool = False,anyM
 
     -----------------------------------------
 
-    exportAsSegment (boolean): このフラグは現在サポートしていません。
+    exportAsSegment (boolean): このフラグは現在サポートされていません。
 
     -----------------------------------------
 
@@ -285,7 +401,7 @@ def file(activate: bool = False,activeProxy: bool = False,add: bool = False,anyM
 
     -----------------------------------------
 
-    exportSelectedNoReference (boolean): このフラグは現在サポートしていません。
+    exportSelectedNoReference (boolean): このフラグは現在サポートされていません。
 
     -----------------------------------------
 
@@ -421,7 +537,7 @@ def file(activate: bool = False,activeProxy: bool = False,add: bool = False,anyM
 
     -----------------------------------------
 
-    moveSelected (boolean): このフラグは現在サポートしていません。
+    moveSelected (boolean): このフラグは現在サポートされていません。
 
     -----------------------------------------
 
@@ -557,7 +673,7 @@ def file(activate: bool = False,activeProxy: bool = False,add: bool = False,anyM
 
     -----------------------------------------
 
-    segment (string): このフラグは現在サポートしていません。
+    segment (string): このフラグは現在サポートされていません。
 
     -----------------------------------------
 
@@ -945,6 +1061,40 @@ def filePathEditor(attributeOnly: bool = False,attributeType: str = "",byType: s
     pass
 
     
+def filterStudioImport(convertShellToPoly: bool = False,includeCameras: bool = False,includeLights: bool = False,transferDirectoryName: str = "") -> None:
+    """
+    UI を使用することなく、MEL の任意の位置から studioImport プラグインのフィルタ オプションを直接設定します。これは ViCE が使用します。
+
+
+
+    -----------------------------------------
+
+    Flags:
+
+    -----------------------------------------
+    
+    convertShellToPoly (boolean): trueの場合、入力にあるシェルは三角メッシュに変換されます。falseの場合、検出したすべてのシェルはサーフェスのグループになります。
+
+    -----------------------------------------
+
+    includeCameras (boolean): trueの場合、「studioImport」への入力にあるカメラは移動されます。falseの場合、「studioImport」が検出したすべてのカメラは無視されます。
+
+    -----------------------------------------
+
+    includeLights (boolean): trueの場合、「studioImport」への入力にあるライトは移動されます。falseの場合、「studioImport」が検出したすべてのライトは無視されます。
+
+    -----------------------------------------
+
+    transferDirectoryName (string): 設定した(空でない)場合、埋め込まれたバイナリファイルを格納するディレクトリとして使用され、設定していない場合は「theTempDirectory->fullName()」で指定したディレクトリが使用されます。
+
+    -----------------------------------------
+
+    Return Value:
+    None: なし
+    """
+    pass
+
+    
 def getFileList(filespec: str = "",folder: str = "") -> None:
     """
     オプションのワイルドカード パターンに一致するファイルのリストを返します。このコマンドは raw システム ファイルで直接動作し、標準的な Maya ファイル パスの解決は行われないことに注意してください。
@@ -1305,6 +1455,268 @@ def namespaceInfo(absoluteName: bool = False,baseName: bool = False,currentNames
     pass
 
     
+def preloadRefEd(control: bool = False,defineTemplate: str = "",docTag: str = "",exists: bool = False,filter: str = "",forceMainConnection: str = "",highlightConnection: str = "",lockMainConnection: bool = False,mainListConnection: str = "",panel: str = "",parent: str = "",selectCommand: str = "",selectFileNode: bool = False,selectionConnection: str = "",stateString: bool = False,unParent: bool = False,unlockMainConnection: bool = False,updateMainConnection: bool = False,useTemplate: str = "") -> None:
+    """
+    ファイルを開くときに、どのリファレンスを読み込み(ロード)、どのリファレンスを保留にする(アンロード)かを管理するエディタを作成します。
+
+
+
+    -----------------------------------------
+
+    Flags:
+
+    -----------------------------------------
+    
+    control (boolean): 照会モード専用です。このエディタの最上位のコントロールを返します。通常は、親を取得してポップアップメニューをアタッチするために使用します。注意:コントロールのないエディタが存在する場合があります。コントロールが存在しない場合は、この照会はNONEを返します。
+
+    -----------------------------------------
+
+    defineTemplate (string): 他の任意のフラグと引数を解析し、かつ引数で指定したコマンドテンプレートに追加するモードに、コマンドのモードを変更します。templateNameが現在のテンプレートとして設定されていれば、その後コマンドが実行されるたびに、この引数が既定の引数として使用されます。
+
+    -----------------------------------------
+
+    docTag (string): エディタにタグをアタッチします。
+
+    -----------------------------------------
+
+    exists (boolean): 指定したオブジェクトが存在するかどうかを返します。他のフラグは無視されます。
+
+    -----------------------------------------
+
+    filter (string): このエディタに使用する項目フィルタオブジェクトの名前を指定します。エディタの主要リストに表示される情報をフィルタします。
+
+    -----------------------------------------
+
+    forceMainConnection (string): エディタがコンテンツのソースとして使用するselectionConnectionオブジェクトの名前を指定します。エディタはselectionConnectionオブジェクトに含まれている項目のみを表示します。これは-mainListConnectionフラグの変形で、接続がロックされている場合でも強制的に変更します。このフラグを使用して、-unlockMainConnection、-mainListConnection、-lockMainConnectionフラグを直後に連続して使用する場合に、オーバーヘッドを減します。
+
+    -----------------------------------------
+
+    highlightConnection (string): そのハイライトリストをエディタと同期化させるselectionConnectionオブジェクトの名前を指定します。すべてのエディタにハイライトリストがあるわけではありません。ハイライトリストがあるエディタの場合、これは第二の選択項目を表示したリストになります。
+
+    -----------------------------------------
+
+    lockMainConnection (boolean): mainConnection内のオブジェクトの現在のリストをロックして、そのオブジェクトだけがエディタ内に表示されるようにします。これ以降、元のmainConnectionに変更を加えても無視されます。
+
+    -----------------------------------------
+
+    mainListConnection (string): エディタがコンテンツのソースとして使用するselectionConnectionオブジェクトの名前を指定します。エディタはselectionConnectionオブジェクトに含まれている項目のみを表示します。
+
+    -----------------------------------------
+
+    panel (string): このエディタ用のパネルを指定します。既定では、エディタがスクリプトパネルの作成コールバックで作成された場合、エディタはそのパネルに属します。エディタがパネルに属していない場合、エディタのあるウィンドウを削除するとエディタも削除されます。
+
+    -----------------------------------------
+
+    parent (string): このエディタの親のレイアウトを指定します。このフラグは、エディタが現在ペアレント化されていない場合のみに効果があります。
+
+    -----------------------------------------
+
+    selectCommand (script): 項目を選択したときに実行されるスクリプトです。
+
+    -----------------------------------------
+
+    selectFileNode (boolean): 現在選択されているロード設定を照会します。現在選択されているロード設定のIDが返されます。このIDは、selLoadSettingsコマンドに対して引数として使用できます。
+
+    -----------------------------------------
+
+    selectionConnection (string): その独自のセレクションリストをエディタと同期化させるselectionConnectionオブジェクトの名前を指定します。このエディタから選択する場合、selectionConnectionオブジェクトの中から選択します。オブジェクトが変更されると、エディタが更新されて変更が反映されます。
+
+    -----------------------------------------
+
+    stateString (boolean): 照会モード専用のフラグです。エディタを作成して現在のエディタの状態と一致させるMELコマンドを返します。返されたコマンド文字列は、指定した名前の代わりに文字列変数$editorNameを使用します。
+
+    -----------------------------------------
+
+    unParent (boolean): エディタをそのレイアウトから除去するように指定します。これは照会モードでは使用できません。
+
+    -----------------------------------------
+
+    unlockMainConnection (boolean): mainConnectionをロック解除して、オリジナルのmainConnection(まだ使用可能な場合)を効率的に復元し、ダイナミックな更新を行います。
+
+    -----------------------------------------
+
+    updateMainConnection (boolean): ロックされたmainConnectionをオリジナルのmainConnectionから更新させますが、ロック状態は保持されます。
+
+    -----------------------------------------
+
+    useTemplate (string): コマンドに、現在のものとは異なるコマンドテンプレートを使用するように強制します。
+
+    -----------------------------------------
+
+    Return Value:
+    None: stringエディタの名前照会モードでは、戻り値のタイプは照会されたフラグに基づきます。
+    """
+    pass
+
+    
+def referenceEdit(applyFailedEdits: bool = False,changeEditTarget: Tuple[str, str] = tuple("", ""),failedEdits: bool = False,removeEdits: bool = False,successfulEdits: bool = False,editCommand: str = "",onReferenceNode: str = "") -> None:
+    """
+    このコマンドを使用して、リファレンスに適用された修正を除去や編集できます。有効な commandTarget は、リファレンス ノード、リファレンス ファイル、リファレンス内のノード、リファレンスのプラグです。変更や除去できるのは、現在開いているシーンでの修正のみです。'referenceQuery -topReference' コマンドを使用して、特定の commandTarget への修正を調べることができます。適用されていない編集のみが影響を受けます。対象のノードがアンロードされた場合、または正常に適用できなかった場合に、編集は適用されません。既定では、このコマンドは失敗した編集のみに動作します(「-failedEdits」と「-successfulEdits」フラグを使用して調整できます)。リファレンス ノードをコマンド ターゲットとして指定することは、ターゲット リファレンス ファイルにあるすべてのノードをターゲットとして指定することと同じです。このケースでは、ターゲット リファレンスをロードまたはアンロードしたかによって、結果が異なる場合があります。アンロードした場合、ターゲット リファレンスのノードと子孫リファレンスにあるノードの両方に影響する編集が実行されない場合があります(例えば、これらの編集内容が削除されないことがある)。これは、リファレンスをアンロードすると、そのリファレンスに属するノードなどの詳細情報が Maya によって維持されないためです。ただし、ターゲット リファレンスにあるノード、または先祖リファレンスのいずれかにあるノードのどちらかのみに影響する編集は正常に削除されます。フラグ -removeEdits および -editCommand を併用すると、既定では、指定されたソース オブジェクト内のすべての connectAttr の編集が削除されます。特定のターゲット オブジェクトに接続されている編集のみを削除するには、ターゲット オブジェクトを追加引数としてコマンドに渡します。こうすると一致基準が絞り込まれるため、ソース オブジェクトをこの追加引数で指定されたターゲットに接続する編集のみが削除されます。以下の例を参照してください。注: プラグを指定する場合は、必ずアトリビュートの適切なロング ネームを使用します。
+
+
+
+    -----------------------------------------
+
+    Flags:
+
+    -----------------------------------------
+    
+    applyFailedEdits (boolean): 適用されていないすべての編集の適用を試みます。このフラグは、以前に失敗した編集を-changeEditTargetフラグで修正した場合に便利です。このフラグは、ロードされたリファレンスのみに使用できます。コマンドのターゲットがリファレンスノードの場合、代わりにコネクトされたリファレンスを使用します。
+
+    -----------------------------------------
+
+    changeEditTarget ([string, string]): このフラグを使用して、指定した編集のターゲットを変更します。このフラグは2つのパラメータを使用します。変更前のターゲットと、変更後のターゲットです。ターゲットはノード名(node)、ノードとアトリビュート名(node.attr)、アトリビュート名(.attr)のいずれかです。編集が古いターゲットに影響する状態の場合、新ターゲットに影響するように変更されます。フラグ'referenceQuery'を使用して、編集ターゲットのフォーマットを判別する必要があります。たとえば多くの場合、編集はアトリビュートのロングネーム(「translateX」など)を格納するので、古いターゲットを指定するときはロングネームを使用する必要があります。ショートネーム(「tx」)を指定すると、編集のリターゲットは成功しません。
+
+    -----------------------------------------
+
+    failedEdits (boolean): 失敗した編集(照会、除去など)を実行するべきかどうかを示す二次フラグです。失敗した編集とは、リファレンスを前回ロードしたときに、正常に適用されなかった編集を指します。編集はさまざまな理由で失敗することがあります(適用するリファレンスノードがリファレンスファイルから除去された、など)。既定では、失敗した編集を実行します。
+
+    -----------------------------------------
+
+    removeEdits (boolean): アンロードした指定commandTargetに影響する編集を除去します。
+
+    -----------------------------------------
+
+    successfulEdits (boolean): 成功した編集(照会、除去など)を実行すべきかどうかを示す二次フラグです。成功した編集とは、リファレンスを前回ロードしたときに、正常に適用された編集を指します。このフラグは、commandTargetをロードした場合は、影響を及ぼしません。既定では、成功した編集を実行しません。
+
+    -----------------------------------------
+
+    editCommand (string): コマンドが考慮するべくリファレンスの編集のタイプを示すための二次フラグです。このフラグが指定されない場合、すべてのタイプの編集が含まれます。このフラグには文字列パラメータが必要です。有効な値は、「addAttr」、「connectAttr」、「deleteAttr」、「disconnectAttr」、「parent」、「setAttr」、「lock」、および「unlock」です。状況によっては、このフラグを複数回指定して、複数の編集タイプを考慮するように指定できます。
+
+    -----------------------------------------
+
+    onReferenceNode (string): 指定したリファレンスノードに格納された編集のみを考慮することを示すための二次フラグです。このフラグは、「exportEdits」コマンドによる指定時のみ複数使用が可能です。
+
+    -----------------------------------------
+
+    Return Value:
+    None: なし
+    """
+    pass
+
+    
+def referenceQuery(child: bool = False,isExportEdits: bool = False,isLoaded: bool = False,liveEdits: bool = False,dagPath: bool = False,editAttrs: bool = False,editNodes: bool = False,editStrings: bool = False,failedEdits: bool = False,filename: bool = False,isNodeReferenced: bool = False,isPreviewOnly: bool = False,namespace: bool = False,nodes: bool = False,parent: bool = False,parentNamespace: bool = False,referenceNode: bool = False,shortName: bool = False,showDagPath: bool = False,showNamespace: bool = False,successfulEdits: bool = False,topReference: bool = False,unresolvedName: bool = False,withoutCopyNumber: bool = False,editCommand: str = "",onReferenceNode: str = "") -> None:
+    """
+    このコマンドを使用して、リファレンスと参照されたノードに関する情報を検索します。有効なターゲットは、リファレンス ノード、リファレンス ファイル、参照されたノードのいずれかです。一部のフラグはターゲットを必要としません。フラグの効果の詳細については、フラグの説明を参照してください。シーンが複数レベルのファイル リファレンスを含む場合、ネストしたリファレンスに影響する編集は、複数のリファレンス ノードに格納される場合があります。例: A.ma は B.ma を参照し、B.ma はポリゴン球(pSphere1)を含む C.ma を参照すると仮定します。B.ma を開いて球を移動した場合、編集は「C:pSphere1」という名のノードを参照する CRN に格納されます。A.ma を開いて球をペアレント化した場合、編集は「B:C:pSphere1」という名のノードを参照する BRN に格納されます。ネストしたリファレンスに影響する編集を照会する場合、編集は適用時と同じフォーマットで返されるので、注意してください。上記例では、A.ma を開いて C.ma に影響するすべての編集を照会すると、「B:C:pSphere1」に作用する親編集と「C:pSphere1」に影響する setAttr 編集の 2 つの編集を返します。しかし C:pSphere1 という名前のノードはもう存在しないため(存在するのは B:C:pSphere1)、返された情報の解釈には注意が必要です。参照された DAG ノードをペアレント化またはインスタンス化した場合にも、同様の注意が必要です。上記例で、A.ma を開き、pSphere1 をペアレント化する代わりにインスタンス化したと仮定します。A.ma を開いた状態で、紛らわしい「B:C:pSphere1」という名前が、「|B:C:pSphere1」と「group1|B:C:pSphere1」に置換されます。しかし C.ma に影響する編集を照会しても、「C:pSphere1」に影響する setAttr 編集は B:C:pSphere1 のインスタンス化の前に適用されているため、この編集を返します。ヒント: 1. -topReference フラグを使用して、現在開いているファイルから適用された編集のみを照会します。2. -onReferenceNode フラグを使用して、結果を特定のリファレンス ノードに格納された編集のみに制限します。文字列の各種操作方法を使用して、影響を受けたノードの現在の名前を補外することができます。
+
+
+
+    -----------------------------------------
+
+    Flags:
+
+    -----------------------------------------
+    
+    child (boolean): -rfn/-referenceNodeと-f/-filenameフラグを修正し、ターゲットリファレンスの子を返すことを示します。文字配列を返します。
+
+    -----------------------------------------
+
+    isExportEdits (boolean): 指定のリファレンスノードまたはファイル名が編集済みファイル(編集済みの書き出し機能で作成した)かどうかを示すブーリアンを返します。
+
+    -----------------------------------------
+
+    isLoaded (boolean): 指定のリファレンスノードまたはファイル名が参照するリファレンスがロードされているかどうかを示すブーリアンを返します。
+
+    -----------------------------------------
+
+    liveEdits (boolean): 編集は、ライブ編集データベースを基に返される必要があります。editStringsフラグとともに使用する場合のみ有効です。
+
+    -----------------------------------------
+
+    dagPath (boolean): -n/-nodesフラグを修正し、返されるDADオブジェクト名には、名前を固有するために必要なDAGパスが含まれます。このフラグが存在しない場合、DAGパスが含まれない名前が返されます。
+
+    -----------------------------------------
+
+    editAttrs (boolean): 文字配列を返します。ターゲットに適用された編集を照会するための主要フラグです。リファレンスの編集に関与するアトリビュートの名前のみを返します。connectAttr編集など、複数のアトリビュートに影響する編集の場合、ノードは、文字配列に含まれる、個別の連続したエントリとして返されます。有効なターゲットは、リファレンスノード、リファレンスファイル、参照されたノードのいずれかです。参照されたノードノードを指定すると、このノードに影響する編集のみを返します。リファレンスファイルまたはリファレンスノードを指定すると、そのリファレンスのノードに影響するすべての編集を返します。ターゲットを指定しない場合、すべての編集を返します。このコマンドはロードしたリファレンスとアンロードしたリファレンスの両方に使用できます。既定では、ターゲットに適用するMELコマンドとしてフォーマットされたすべての編集を返します。-ea/-editAttrsフラグと一緒に使用し、関与するノードとアトリビュートの両方の名前をnode.attribute形式で返すことを示します。
+
+    -----------------------------------------
+
+    editNodes (boolean): 文字配列を返します。ターゲットに適用された編集を照会するための主要フラグです。リファレンスの編集に関与するノードの名前のみを返します。connectAttr編集など、複数のノードに影響する編集の場合、ノードは、文字配列に含まれる、個別の連続したエントリとして返されます。有効なターゲットは、リファレンスノード、リファレンスファイル、参照されたノードのいずれかです。参照されたノードノードを指定すると、このノードに影響する編集のみを返します。リファレンスファイルまたはリファレンスノードを指定すると、そのリファレンスのノードに影響するすべての編集を返します。ターゲットを指定しない場合、すべての編集を返します。このコマンドはロードしたリファレンスとアンロードしたリファレンスの両方に使用できます。既定では、ターゲットに適用するMELコマンドとしてフォーマットされたすべての編集を返します。-ea/-editAttrsフラグと一緒に使用し、関与するノードとアトリビュートの両方の名前をnode.attribute形式で返すことを示します。
+
+    -----------------------------------------
+
+    editStrings (boolean): 文字配列を返します。ターゲットに適用された編集を照会するための主要フラグです。編集は有効なMELコマンドとして返されます。有効なターゲットは、リファレンスノード、リファレンスファイル、参照されたノードのいずれかです。参照されたノードノードを指定すると、このノードに影響する編集のみを返します。リファレンスファイルまたはリファレンスノードを指定すると、そのリファレンスのノードに影響するすべての編集を返します。ターゲットを指定しない場合、すべての編集を返します。このコマンドはロードしたリファレンスとアンロードしたリファレンスの両方に使用できます。既定では、ターゲットに適用するMELコマンドとしてフォーマットされたすべての編集を返します。このフラグは、-en/-editNodesや-ea/-editAttrsフラグとは一緒に使用できません。
+
+    -----------------------------------------
+
+    failedEdits (boolean): 失敗した編集(照会、除去など)を実行するべきかどうかを示す二次フラグです。失敗した編集とは、リファレンスを前回ロードしたときに、正常に適用されなかった編集を指します。編集はさまざまな理由で失敗することがあります(適用するリファレンスノードがリファレンスファイルから除去された、など)。既定では、失敗した編集を実行しません。
+
+    -----------------------------------------
+
+    filename (boolean): 文字列を返します。ターゲットリファレンスにコネクトされたファイル名を照会するための主要フラグです。
+
+    -----------------------------------------
+
+    isNodeReferenced (boolean): ブーリアンを返します。ターゲットノードがリファレンスファイル由来かどうかを調べるための主要フラグです。ターゲットノードがリファレンスファイル由来の場合はtrue、そうでない場合はfalseを返します。
+
+    -----------------------------------------
+
+    isPreviewOnly (boolean): ブーリアンを返します。このフラグは、ターゲットリファレンスノードがプレビューリファレンスノードのみかどうかを調べるために使用されます。
+
+    -----------------------------------------
+
+    namespace (boolean): 文字列を返します。このフラグは、ルートネームスペース「:」から始まるターゲットリファレンスのフルネームスペースパスを返します。shortNameフラグと組み合わせて、ネームスペースのベース名だけを返すことができます。
+
+    -----------------------------------------
+
+    nodes (boolean): 文字配列を返します。ターゲットリファレンスのコンテンツを照会するための主要フラグです。
+
+    -----------------------------------------
+
+    parent (boolean): -rfn/-referenceNodeと-f/-filenameフラグを修正し、ターゲットリファレンスの親を返すことを示します。
+
+    -----------------------------------------
+
+    parentNamespace (boolean): ターゲットリファレンスの親のネームスペースを照会して返すために使用される主要フラグです。
+
+    -----------------------------------------
+
+    referenceNode (boolean): 文字列を返します。ターゲットリファレンスにコネクトされたリファレンスノードを照会するための主要フラグです。
+
+    -----------------------------------------
+
+    shortName (boolean): このフラグによって、「-f/-filename」フラグおよび「-ns/-namespace」フラグが修正されます。「-f/-filename」フラグとともに使用され、ファイル名をショートネーム(ディレクトリパスを含まないファイル名)で返すことを示します。このフラグが存在しない場合、フルネームとディレクトリパスを返します。「-ns/-namespace」フラグとともに使用され、ネームスペースをベース名で返すことを示します(つまり、フルネームスペースパス「:AAA:BBB:CCC」のベース名は「CCC」です)。
+
+    -----------------------------------------
+
+    showDagPath (boolean): 編集時に、完全なDAGパスを表示/非表示にします。falseの場合、リファレンスの編集のノード名のみが表示されます。-editNodes、-editStrings、または-editAttrsフラグと一緒に使用する必要があります。
+
+    -----------------------------------------
+
+    showNamespace (boolean): リファレンスの編集内のノード上のネームスペースを表示/非表示にします。-editNodes、-editStrings、または-editAttrsフラグと一緒に使用する必要があります。
+
+    -----------------------------------------
+
+    successfulEdits (boolean): 成功した編集(照会、除去など)を実行すべきかどうかを示す二次フラグです。成功した編集とは、リファレンスを前回ロードしたときに、正常に適用された編集を指します。既定では、成功した編集を実行します。
+
+    -----------------------------------------
+
+    topReference (boolean): -rfn/-referenceNodeフラグを修正し、ターゲットリファレンスの、最上位の先祖リファレンスを返すことを示します。
+
+    -----------------------------------------
+
+    unresolvedName (boolean): -f/-filenameフラグを修正し、返されるファイル名は解決されません(ファイルをロードしたときに指定したパスになります。このパスは環境変数を含み、ディスクに存在しない場合があります)。このフラグが存在しない場合、解決済みの名前を返します。
+
+    -----------------------------------------
+
+    withoutCopyNumber (boolean): -f/-filenameフラグを修正し、返されるファイル名の最後にコピー番号(たとえば)をアペンドしません。このフラグが存在しない場合、返されたファイル名の最後にコピー番号がアペンドされることがあります。
+
+    -----------------------------------------
+
+    editCommand (string): コマンドが考慮するべくリファレンスの編集のタイプを示すための二次フラグです。このフラグが指定されない場合、すべてのタイプの編集が含まれます。このフラグには文字列パラメータが必要です。有効な値は、「addAttr」、「connectAttr」、「deleteAttr」、「disconnectAttr」、「parent」、「setAttr」、「lock」、および「unlock」です。状況によっては、このフラグを複数回指定して、複数の編集タイプを考慮するように指定できます。
+
+    -----------------------------------------
+
+    onReferenceNode (string): 指定したリファレンスノードに格納された編集のみを考慮することを示すための二次フラグです。このフラグは、「exportEdits」コマンドによる指定時のみ複数使用が可能です。
+
+    -----------------------------------------
+
+    Return Value:
+    None: string[]照会実行用。
+    """
+    pass
+
+    
 def reloadImage() -> None:
     """
     ディスクから xpm イメージをリロードします。ディスク上でファイルが変更され、リロードする必要がある場合に使用します。
@@ -1483,6 +1895,124 @@ def saveImage(annotation: str = "",backgroundColor: Tuple[float, float, float] =
     pass
 
     
+def sceneEditor(control: bool = False,defineTemplate: str = "",docTag: str = "",exists: bool = False,filter: str = "",forceMainConnection: str = "",highlightConnection: str = "",lockMainConnection: bool = False,mainListConnection: str = "",onlyParents: bool = False,panel: str = "",parent: str = "",refreshReferences: bool = False,selectCommand: str = "",selectItem: int = 1,selectReference: str = "",selectionConnection: str = "",shortName: bool = False,stateString: bool = False,unParent: bool = False,unlockMainConnection: bool = False,unresolvedName: bool = False,updateMainConnection: bool = False,useTemplate: str = "",withoutCopyNumber: bool = False) -> None:
+    """
+    シーンのファイルを管理するエディタを作成します。
+
+
+
+    -----------------------------------------
+
+    Flags:
+
+    -----------------------------------------
+    
+    control (boolean): 照会モード専用です。このエディタの最上位のコントロールを返します。通常は、親を取得してポップアップメニューをアタッチするために使用します。注意:コントロールのないエディタが存在する場合があります。コントロールが存在しない場合は、この照会はNONEを返します。
+
+    -----------------------------------------
+
+    defineTemplate (string): 他の任意のフラグと引数を解析し、かつ引数で指定したコマンドテンプレートに追加するモードに、コマンドのモードを変更します。templateNameが現在のテンプレートとして設定されていれば、その後コマンドが実行されるたびに、この引数が既定の引数として使用されます。
+
+    -----------------------------------------
+
+    docTag (string): エディタにタグをアタッチします。
+
+    -----------------------------------------
+
+    exists (boolean): 指定したオブジェクトが存在するかどうかを返します。他のフラグは無視されます。
+
+    -----------------------------------------
+
+    filter (string): このエディタに使用する項目フィルタオブジェクトの名前を指定します。エディタの主要リストに表示される情報をフィルタします。
+
+    -----------------------------------------
+
+    forceMainConnection (string): エディタがコンテンツのソースとして使用するselectionConnectionオブジェクトの名前を指定します。エディタはselectionConnectionオブジェクトに含まれている項目のみを表示します。これは-mainListConnectionフラグの変形で、接続がロックされている場合でも強制的に変更します。このフラグを使用して、-unlockMainConnection、-mainListConnection、-lockMainConnectionフラグを直後に連続して使用する場合に、オーバーヘッドを減します。
+
+    -----------------------------------------
+
+    highlightConnection (string): そのハイライトリストをエディタと同期化させるselectionConnectionオブジェクトの名前を指定します。すべてのエディタにハイライトリストがあるわけではありません。ハイライトリストがあるエディタの場合、これは第二の選択項目を表示したリストになります。
+
+    -----------------------------------------
+
+    lockMainConnection (boolean): mainConnection内のオブジェクトの現在のリストをロックして、そのオブジェクトだけがエディタ内に表示されるようにします。これ以降、元のmainConnectionに変更を加えても無視されます。
+
+    -----------------------------------------
+
+    mainListConnection (string): エディタがコンテンツのソースとして使用するselectionConnectionオブジェクトの名前を指定します。エディタはselectionConnectionオブジェクトに含まれている項目のみを表示します。
+
+    -----------------------------------------
+
+    onlyParents (boolean): 「selectItem」または「selectReference」による照会と一緒に使用すると、親と子の両方のファイルまたはリファレンスを選択すると、親だけを返します。
+
+    -----------------------------------------
+
+    panel (string): このエディタ用のパネルを指定します。既定では、エディタがスクリプトパネルの作成コールバックで作成された場合、エディタはそのパネルに属します。エディタがパネルに属していない場合、エディタのあるウィンドウを削除するとエディタも削除されます。
+
+    -----------------------------------------
+
+    parent (string): このエディタの親のレイアウトを指定します。このフラグは、エディタが現在ペアレント化されていない場合のみに効果があります。
+
+    -----------------------------------------
+
+    refreshReferences (boolean): リファレンスを強制的に再表示します。
+
+    -----------------------------------------
+
+    selectCommand (script): 項目を選択したときに実行されるスクリプトです。
+
+    -----------------------------------------
+
+    selectItem (int): 現在選択している項目を照会または変更します。照会の場合は、現在選択しているファイル名を返します。
+
+    -----------------------------------------
+
+    selectReference (string): 現在選択しているリファレンスを照会します。現在選択しているリファレンスノードの名前を返します。
+
+    -----------------------------------------
+
+    selectionConnection (string): その独自のセレクションリストをエディタと同期化させるselectionConnectionオブジェクトの名前を指定します。このエディタから選択する場合、selectionConnectionオブジェクトの中から選択します。オブジェクトが変更されると、エディタが更新されて変更が反映されます。
+
+    -----------------------------------------
+
+    shortName (boolean): 「selectItem」による照会と一緒に使用すると、返されるファイル名はショートネームになります(つまり、ファイル名だけでディレクトリパスはありません)。このフラグが存在しない場合、フルネームとディレクトリパスを返します。
+
+    -----------------------------------------
+
+    stateString (boolean): 照会モード専用のフラグです。エディタを作成して現在のエディタの状態と一致させるMELコマンドを返します。返されたコマンド文字列は、指定した名前の代わりに文字列変数$editorNameを使用します。
+
+    -----------------------------------------
+
+    unParent (boolean): エディタをそのレイアウトから除去するように指定します。これは照会モードでは使用できません。
+
+    -----------------------------------------
+
+    unlockMainConnection (boolean): mainConnectionをロック解除して、オリジナルのmainConnection(まだ使用可能な場合)を効率的に復元し、ダイナミックな更新を行います。
+
+    -----------------------------------------
+
+    unresolvedName (boolean): 「selectItem」による照会と一緒に使用すると、返されるファイル名は解決されません(つまり、ファイルがMayaにロードされたときに最初から指定されているパスになります。このパスは環境変数を含み、ディスクに存在しない場合があります)。このフラグが存在しない場合、解決済みの名前を返します。
+
+    -----------------------------------------
+
+    updateMainConnection (boolean): ロックされたmainConnectionをオリジナルのmainConnectionから更新させますが、ロック状態は保持されます。
+
+    -----------------------------------------
+
+    useTemplate (string): コマンドに、現在のものとは異なるコマンドテンプレートを使用するように強制します。
+
+    -----------------------------------------
+
+    withoutCopyNumber (boolean): 「selectItem」による照会と一緒に使用すると、返されるファイル名の最後にコピー番号はアペンドされません。このフラグが存在しない場合、返されたファイル名の最後にコピー番号がアペンドされることがあります。
+
+    -----------------------------------------
+
+    Return Value:
+    None: stringエディタの名前照会モードでは、戻り値のタイプは照会されたフラグに基づきます。
+    """
+    pass
+
+    
 def sceneUIReplacement(clear: bool = False,deleteRemaining: bool = False,getNextFilter: Tuple[str, str] = tuple("", ""),getNextPanel: Tuple[str, str] = tuple("", ""),getNextScriptedPanel: Tuple[str, str] = tuple("", ""),update: str = "") -> None:
     """
     このコマンドは、ロード中のシーンで利用可能な既存のシーンに基づく UI を返します。ロード中のシーンが使用していない UI を削除することもできます。
@@ -1571,6 +2101,68 @@ def scriptNode(afterScript: str = "",beforeScript: str = "",executeAfter: bool =
 
     Return Value:
     str: なし照会モードでは、戻り値のタイプは照会されたフラグに基づきます。
+    """
+    pass
+
+    
+def selLoadSettings(activeProxy: str = "",deferReference: bool = False,fileName: str = "",numSettings: int = 1,proxyManager: str = "",proxySetFiles: str = "",proxySetTags: str = "",proxyTag: str = "",referenceNode: str = "",shortName: bool = False,unresolvedName: bool = False) -> None:
+    """
+    このコマンドを使用して、暗黙的なロード設定に関する情報を編集と照会します。これは現在、主にプリロード リファレンス エディタ(Preload Reference Editor)での内部的な使用が目的です。selLoadSettings はロード設定 ID に作用します。ターゲット シーンに暗黙的なロード設定が構築される場合、ターゲット シーンのリファレンスごとに 1 つのロード設定が存在します。各ロード設定は、ターゲット リファレンス階層の先行順走査のインデックスである数値 ID を持ちます(ルート シーン ファイルの ID には 0 が割り当てられます)。ID は数値数字で表しますが、文字配列としてコマンドに渡す必要があります。例: シーン例:
+
+
+
+    -----------------------------------------
+
+    Flags:
+
+    -----------------------------------------
+    
+    activeProxy (string): プロキシセットのアクティブプロキシを変更または照会します。照会モードの場合、アクティブプロキシのproxyTagを返します。編集モードの場合は、指定したタグのproxySetにあるプロキシを検出し、それをアクティブプロキシにします。
+
+    -----------------------------------------
+
+    deferReference (boolean): リファレンスのロード状態を変更または照会します。
+
+    -----------------------------------------
+
+    fileName (string): 指定したロード設定にコネクトされたファイル名のリファレンスファイルを返します。
+
+    -----------------------------------------
+
+    numSettings (uint): 暗黙的なロード設定のグループにある設定の数を返します。これはシーンのリファレンスの数に1を足した数と同じです。
+
+    -----------------------------------------
+
+    proxyManager (string): 指定したロード設定にコネクトされたプロキシマネージャの名前を返します。
+
+    -----------------------------------------
+
+    proxySetFiles (string): 指定したロード設定にコネクトされたプロキシセットで、使用可能なプロキシの名前を返します。
+
+    -----------------------------------------
+
+    proxySetTags (string): 指定したロード設定にコネクトされたプロキシセットで、使用可能なプロキシタグの名前を返します。
+
+    -----------------------------------------
+
+    proxyTag (string): 指定したロード設定にコネクトされたプロキシタグの名前を返します。
+
+    -----------------------------------------
+
+    referenceNode (string): 指定したロード設定にコネクトされたファイル名のリファレンスノードを返します。
+
+    -----------------------------------------
+
+    shortName (boolean): fileName照会フラグの戻り値をフォーマットし、リファレンスファイルのショートネームのみを返します。
+
+    -----------------------------------------
+
+    unresolvedName (boolean): fileName照会フラグの戻り値をフォーマットし、リファレンスファイルの未解決名を返します。未解決のファイル名は、ファイルがディスク上に存在するかどうかに関わらず、リファレンスが作成されたときに使用されるファイル名です。Mayaはディスクに存在しないファイル名を発見すると、ファイルが他の場所にあるかどうかを検索し、その名前の解決を試みます。既定では、fileNameフラグは解決された値を返します。
+
+    -----------------------------------------
+
+    Return Value:
+    None: string照会実行用。照会モードでは、戻り値のタイプは照会されたフラグに基づきます。
     """
     pass
 
@@ -3017,6 +3609,52 @@ def format(stringArg: str = "") -> None:
     pass
 
     
+def aaf2fcp(deleteFile: bool = False,dstPath: str = "",getFileName: int = 1,progress: int = 1,srcFile: str = "",terminate: int = 1,waitCompletion: int = 1) -> None:
+    """
+    このコマンドを使用して、aff ファイルを Final Cut Pro (fcp) xml ファイルに変換します。変換プロセスの完了に数秒かかったり、コマンドが故意に非同期的に実行される場合があります。
+
+
+
+    -----------------------------------------
+
+    Flags:
+
+    -----------------------------------------
+    
+    deleteFile (boolean): テンポラリファイルを削除します。このオプションは、必ずterminateオプションと一緒に使用します。
+
+    -----------------------------------------
+
+    dstPath (string): 保存先のパスを指定します。
+
+    -----------------------------------------
+
+    getFileName (int): 出力ファイル名を照会します。
+
+    -----------------------------------------
+
+    progress (int): 進捗レポートを要求します。
+
+    -----------------------------------------
+
+    srcFile (string): ソースファイルを指定します。
+
+    -----------------------------------------
+
+    terminate (int): タスクを完了します。
+
+    -----------------------------------------
+
+    waitCompletion (int): 変換プロセスの完了を待ちます。
+
+    -----------------------------------------
+
+    Return Value:
+    None: stringコマンドの結果
+    """
+    pass
+
+    
 def allNodeTypes(includeAbstract: bool = False) -> None:
     """
     このコマンドは、システムに登録されている、作成可能なノードのタイプ名を含むリストを返します。ノード タイプの中には作成できない抽象的なノードも含まれるのでご注意ください。これらはリストに含まれません(例: transform と polyShape はともに dagObject を継承しますが、dagObject は直接作成できないため、リストには含まれません)。
@@ -3035,6 +3673,380 @@ def allNodeTypes(includeAbstract: bool = False) -> None:
 
     Return Value:
     None: string[]ノード タイプのリスト
+    """
+    pass
+
+    
+def audioTrack(insertTrack: int = 1,lock: bool = False,mute: bool = False,numTracks: int = 1,removeEmptyTracks: bool = False,removeTrack: int = 1,solo: bool = False,swapTracks: Tuple[int, int] = tuple(1, 1),title: str = "",track: int = 1) -> None:
+    """
+    このコマンドを使用して、シーケンサ(Sequencer)に表示されるオーディオ クリップに関連するトラックの挿入や除去を行います。また、トラックのロックやミュートなどを行うために、トラックの状態を修正することができます。
+
+
+
+    -----------------------------------------
+
+    Flags:
+
+    -----------------------------------------
+    
+    insertTrack (uint): このフラグを使用して、指定したトラックインデックスに空のトラックを新たに挿入します。インデックスは1ベースです。
+
+    -----------------------------------------
+
+    lock (boolean): このフラグを使用して、指定したオーディオノードと同じトラック上にあるすべてのオーディオクリップを、現在の位置およびトラックでロックするかどうか指定します。
+
+    -----------------------------------------
+
+    mute (boolean): このフラグを使用して、指定したオーディオノードと同じトラック上にあるすべてのオーディオクリップをミュートするかどうかを指定します。
+
+    -----------------------------------------
+
+    numTracks (uint): オーディオトラックの数を照会する
+
+    -----------------------------------------
+
+    removeEmptyTracks (boolean): このフラグを使用して、クリップがないすべてのトラックを除去します。
+
+    -----------------------------------------
+
+    removeTrack (uint): このフラグを使用して、指定したインデックスのトラックを除去します。クリップが設置されているトラックは除去することができません。
+
+    -----------------------------------------
+
+    solo (boolean): このフラグを使用して、指定したオーディオノードと同じトラック上にあるすべてのオーディオクリップを単独操作するかどうかを指定します。
+
+    -----------------------------------------
+
+    swapTracks ([uint, uint]): このフラグは、指定した2つのトラックの内容を入れ替えるために使用します。インデックスは1ベースです。
+
+    -----------------------------------------
+
+    title (string): トラックのタイトルを指定します。
+
+    -----------------------------------------
+
+    track (uint): 自身のtrackNumberを使用して操作されるトラックを指定します。照会モードでは、このフラグに値が必要になります。
+
+    -----------------------------------------
+
+    Return Value:
+    None: なし照会モードでは、戻り値のタイプは照会されたフラグに基づきます。
+    """
+    pass
+
+    
+def cacheFile(appendFrame: bool = False,attachFile: bool = False,cacheFileNode: str = "",cacheFormat: str = "",cacheInfo: str = "",cacheableAttrs: str = "",cacheableNode: str = "",channelIndex: bool = False,channelName: str = "",convertPc2: bool = False,createCacheNode: bool = False,creationChannelName: str = "",dataSize: bool = False,deleteCachedFrame: bool = False,descriptionFileName: bool = False,directory: str = "",doubleToFloat: bool = False,endTime: float = 1.0,fileName: str = "",format: str = "",geometry: bool = False,inAttr: str = "",inTangent: str = "",interpEndTime: float = 1.0,interpStartTime: float = 1.0,noBackup: bool = False,outAttr: str = "",outTangent: str = "",pc2File: str = "",pointCount: bool = False,points: str = "",pointsAndNormals: str = "",prefix: bool = False,refresh: bool = False,replaceCachedFrame: bool = False,replaceWithoutSimulating: bool = False,runupFrames: int = 1,sampleMultiplier: int = 1,simulationRate: float = 1.0,singleCache: bool = False,startTime: float = 1.0,staticCache: bool = False,worldSpace: bool = False) -> None:
+    """
+    ディスク上に 1 つまたは複数のキャッシュ ファイルを作成し、フレームのスパン用のアトリビュート データを格納します。キャッシュは、ジオメトリ上のポイント/法線(pts/points または pan/pointsAndNormals フラグを使用)、vectorArray 出力データ(oa/outAttr フラグを使用)、または追加のノード固有のデータ(データをサポートするこれらのノードに cnd/cacheableNode フラグを使用)に対して作成できます。
+
+
+
+    -----------------------------------------
+
+    Flags:
+
+    -----------------------------------------
+    
+    appendFrame (boolean): startTimeフラグとendTimeフラグで指定した時間の間、データをキャッシュにアペンドします。時間が指定されていない場合は、現在のタイムにアペンドします。pts/pointsフラグかcnd/cacheableNodeフラグと一緒に使用する必要があります。上書きされたフレームは削除されませんが、f/fileNameフラグで指定した名前に変更されます。
+
+    -----------------------------------------
+
+    attachFile (boolean): キャッシュファイルを作成するのではなく、ディスク上の既存のキャッシュファイルをシーン内のアトリビュートにアタッチすることを示すために使用します。アトリビュートを指定するにはinAttrフラグを使用します。
+
+    -----------------------------------------
+
+    cacheFileNode (string): 指定したジオメトリに複数のキャッシュがアタッチされている場合に、アペンドする/置き換えるキャッシュファイルノード名を指定します。照会モードでは、このフラグに値が必要になります。
+
+    -----------------------------------------
+
+    cacheFormat (string): キャッシュファイルフォーマットです。既定はMayaの.mcxフォーマットですが、その他のフォーマットもプラグイン経由で使用できます。
+
+    -----------------------------------------
+
+    cacheInfo (string): 作成モードでは、文字配列を返すMELスクリプトを指定するために使用します。キャッシュの作成時には、このMELスクリプトを実行して返された文字列をキャッシュの.xml記述ファイルに書き込みます。照会モードでは、ユーザ名、Mayaシーン名、Mayaバージョン番号など、cacheFileに保管された記述情報を返します。
+
+    -----------------------------------------
+
+    cacheableAttrs (string): 付随のキャッシュノードで定義されたキャッシュ可能なアトリビュートのリストを返します。この引数はcacheableNodeフラグが必要です。
+
+    -----------------------------------------
+
+    cacheableNode (string): 内容をキャッシュするキャッシュ可能なノードの名前を指定します。キャッシュ可能なノードとは、キャッシングメカニズムで動作するように特別にデザインされたノードです。キャッシュ可能なノードの例として、nClothノードがあります。照会モードでは、このフラグに値が必要になります。
+
+    -----------------------------------------
+
+    channelIndex (boolean): cacheFileNodeフラグを使用して指定したcacheFileノードに対して、選択したジオメトリのチャネルインデックスを返す照会専用フラグです。
+
+    -----------------------------------------
+
+    channelName (string): attachFileを使用する場合に、inAttrにアタッチされるファイル内のチャネルを示すために使用します。指定しないと、ファイル内の最初のチャネルが使用されます。照会モードでは、記述ファイルに関連付けられたチャネルを照会できます。
+
+    -----------------------------------------
+
+    convertPc2 (boolean): PC2ファイルをMayaのキャッシュフォーマットに変換する(true)か、Mayaのキャッシュをpc2フォーマットに変換(false)します。
+
+    -----------------------------------------
+
+    createCacheNode (boolean): キャッシュファイルを作成するのではなく、cacheFileノードをディスク上の既存のキャッシュファイルに関連付けて作成することを示すために使用します。
+
+    -----------------------------------------
+
+    creationChannelName (string): 新しいキャッシュの作成時には、この多目的フラグでキャッシュするチャネルを指定します。名前は、キャッシュされるオブジェクトで定義されたキャッシュ可能なチャネル名から付けられます。キャッシュの作成時にこのフラグを使用しないと、キャッシュ可能なすべてのチャネルがキャッシュされます。
+
+    -----------------------------------------
+
+    dataSize (boolean): これはフレーム単位でキャッシュされるデータのサイズを返す照会専用フラグです。このフラグはcacheableNode、points、pointsAndNormal、およびoutAttrフラグと一緒に使用します。
+
+    -----------------------------------------
+
+    deleteCachedFrame (boolean): startTime/endTimeフラグで指定した時間のキャッシュデータを削除します。時間が指定されていない場合は、現在のフレームを削除します。pts/pointsフラグかcnd/cacheableNodeフラグと一緒に使用する必要があります。削除されたフレームはディスクからは除去されませんが、f/fileNameフラグで指定した名前に変更されます。
+
+    -----------------------------------------
+
+    descriptionFileName (boolean): これは、既存のcacheFileノードの記述ファイル名を返す照会専用フラグです。cacheFileノードを指定しないと、指定したその他のフラグに基づいて作成された記述ファイル名を返します。
+
+    -----------------------------------------
+
+    directory (string): キャッシュファイルを配置するディレクトリを指定します。ディレクトリフラグを指定しないと、キャシュファイルはプロジェクトデータディレクトリに配置されます。
+
+    -----------------------------------------
+
+    doubleToFloat (boolean): キャッシュ作成時には、doubleデータをfloatとしてファイルに格納します。これにより、ファイルサイズが軽減します。
+
+    -----------------------------------------
+
+    endTime (time): キャッシュ範囲の終了フレームを指定します。
+
+    -----------------------------------------
+
+    fileName (string): キャッシュファイルのベースファイル名を指定します。複数のオブジェクトがキャッシュされていて、フォーマットがOneFilePerFrameの場合は、各キャッシュファイルはこのベースファイル名にプリフィックスを付加した名前になります。照会モードでは、指定したcacheFileノードに接続されたファイルを返します。rpf/replaceCachedFrameまたはapf/appendFrameと一緒に使用する場合は、バックアップファイル名を指定します。指定しないと、置き換えられたフレームは既定の名前で格納されます。照会モードでは、このフラグは値を受け入れることができます。
+
+    -----------------------------------------
+
+    format (string): キャッシュの分配フォーマットを指定します。有効な値は「OneFile」と「OneFilePerFrame」です。
+
+    -----------------------------------------
+
+    geometry (boolean): 指定したキャッシュノードでコントロールされるジオメトリを返す照会フラグです。
+
+    -----------------------------------------
+
+    inAttr (string): キャッシュファイルが制御するアトリビュートの名前を指定します。キャッシュファイルの作成時にはこのフラグはオプションです。作成モード時にこのフラグを指定しないと、ディスク上にキャッシュファイルが作成されても、シーン内の何も制御されません。attachFileフラグを使用する場合は、このフラグが必要です。
+
+    -----------------------------------------
+
+    inTangent (string): 置き換えたフレームの前にフレームを補間する場合のイン接線のタイプを指定します。ist/interpStartTimeフラグとiet/interpEndTimeフラグを一緒に使用する必要があります。有効な値は「linear」、「smooth」、「step」です。
+
+    -----------------------------------------
+
+    interpEndTime (time): endTimeで開始したリニア補間を終了するフレームを指定します。rpf/replaceCachedFrameフラグかapf/appendFrameフラグと一緒に使用する必要があります。補間は、endTimeとinterpEndTimeとの間のフレームをキャッシュから除去することで達成されます。除去されたフレームは、f/fileNameフラグで指定した名前に変更されます。
+
+    -----------------------------------------
+
+    interpStartTime (time): リニア補間を開始してstartTimeで終了するフレームを指定します。rpf/replaceCachedFrameフラグかapf/appendFrameフラグと一緒に使用する必要があります。補間は、interpStartTimeとstartTimeの間のフレームをキャッシュから除去することで達成します。この除去されたフレームは、f/fileNameフラグで指定した名前に変更されます。
+
+    -----------------------------------------
+
+    noBackup (boolean): キャッシュフレームのアペンド、置き換え、削除時に上書きされるファイルに対して、バックアップファイルを作成しないように指定します。apf/appendFrame、rpf/replaceCachedFrame、またはdcf/deleteCachedFrameフラグと一緒の場合にのみ使用できます。
+
+    -----------------------------------------
+
+    outAttr (string): ディスクにキャッシュされるアトリビュートの名前を指定します。照会モードでは、このフラグに値が必要になります。
+
+    -----------------------------------------
+
+    outTangent (string): 置き換えたフレームの後にフレームを補間する場合のアウト接線のタイプを指定します。ist/interpStartTimeフラグとiet/interpEndTimeフラグを一緒に使用する必要があります。有効な値は「linear」、「smooth」、「step」です。
+
+    -----------------------------------------
+
+    pc2File (string): pc2ファイルへのフルパスを指定します。pc2フラグと一緒に使用する必要があります。
+
+    -----------------------------------------
+
+    pointCount (boolean): キャッシュファイルに保管されたポイントの数を返す照会フラグです。照会するチャネルを指定するには、channelNameフラグを使用します。
+
+    -----------------------------------------
+
+    points (string): ポイントをキャッシュするジオメトリ名を指定します。照会モードでは、このフラグに値が必要になります。
+
+    -----------------------------------------
+
+    pointsAndNormals (string): ポイントおよび法線をキャッシュするジオメトリ名を指定します。法線は頂点単位、ポリゴン単位です。法線のキャッシュをジオメトリに読み込み直すことはできません。このフラグは、キャッシュファイルを書き出すためにのみ使用できます。apf/appendFrame、dcf/deleteCachedFrame、およびrpf/replaceCachedFrameフラグとともに使用することはできません。照会モードでは、このフラグに値が必要になります。
+
+    -----------------------------------------
+
+    prefix (boolean): 指定したfileNameをcacheNameのプリフィックスとして使用することを示します。
+
+    -----------------------------------------
+
+    refresh (boolean): キャッシュの作成時に使用すると、キャッシング中に強制的にスクリーンをリフレッシュします。これによりキャッシュの作成速度は落ちますが、キャッシュ中にシミュレーションの進行状況を確認できます。
+
+    -----------------------------------------
+
+    replaceCachedFrame (boolean): startTime/endTimeフラグで指定された時間のキャッシュデータを置き換えます。時間が指定されていない場合は、現在のタイムのキャッシュファイルを置き換えます。pts/pointsフラグかcnd/cacheableNodeフラグと一緒に使用する必要があります。置き換えられたフレームは削除されませんが、f/fileNameフラグで指定した名前に変更されます。
+
+    -----------------------------------------
+
+    replaceWithoutSimulating (boolean): キャッシュフレームを置き換えるときに、シミュレーションなしでキャッシュノードから置き換えるか、または進行中の時間から置き換えてシミュレーションを実行させるかを指定します。このフラグは、startTimeフラグとendTimeフラグのどちらも使用していない場合、またはstartTimeフラグとendTimeフラグが同じ時間値を指定している場合にのみ有効です。
+
+    -----------------------------------------
+
+    runupFrames (int): 開始フレームの前にシミュレートする準備フレームの数を指定します。値は0以上である必要があります。既定は2です。
+
+    -----------------------------------------
+
+    sampleMultiplier (int): キャッシュを複数のシミュレーションレートとして作成する場合のサンプリングレートを指定します。値が1の場合は、時間が進むごとにサンプルをキャッシュします。値が2の場合は1つおきにサンプルをキャッシュ、以下同様に続きます。既定は1です。
+
+    -----------------------------------------
+
+    simulationRate (time): キャッシュを作成しているときのシミュレーションレートを指定します。キャッシュの作成時には、キャッシュの終了時間に到達するか超過するまで、シミュレーションレートに従って時間を進めます。値はフレームで指定します。既定値は1フレームです。
+
+    -----------------------------------------
+
+    singleCache (boolean): points、pointsAndNormal、またはcacheableNodeフラグと一緒に使用する場合に、複数のジオメトリを単一のキャッシュに入れるか、またはジオメトリごとに1つのキャッシュを作成するか(既定)のどちらかを指定します。
+
+    -----------------------------------------
+
+    startTime (time): キャッシュ範囲の開始フレームを指定します。
+
+    -----------------------------------------
+
+    staticCache (boolean): falseの場合、アニメーションや変形がないように見える場合は、キャッシュ作成時にオブジェクトのキャッシュを保存しません。trueの場合、オブジェクトにアニメーションや変形がないように見える場合でも、キャッシュを保存します。既定はtrueです。照会モードでは、シェイプを指定すると、そのシェイプにアニメーションや変形がないように見える場合はtrueを返します。
+
+    -----------------------------------------
+
+    worldSpace (boolean): pointsフラグを使用している場合にこのフラグをオンにすると、ポイントを書き込む場所がワールド空間になります。このフラグは、キャッシュ書き出しなどに使用されます。
+
+    -----------------------------------------
+
+    Return Value:
+    None: string作成されたキャッシュの記述ファイルの名前照会モードでは、戻り値のタイプは照会されたフラグに基づきます。
+    """
+    pass
+
+    
+def cacheFileCombine(cacheIndex: bool = False,channelName: str = "",connectCache: str = "",keepWeights: bool = False,layerNode: bool = False,nextAvailable: bool = False,object: str = "",objectIndex: int = 1) -> None:
+    """
+    指定したオブジェクトに対して複数の cacheFiles を結合、レイヤまたはブレンドするために使用できる cacheBlend ノードを作成します。
+
+
+
+    -----------------------------------------
+
+    Flags:
+
+    -----------------------------------------
+    
+    cacheIndex (boolean): connectCacheフラグで指定したキャッシュに関連するインデックスを返す照会モード専用フラグです。
+
+    -----------------------------------------
+
+    channelName (string): connectCacheフラグと一緒に使用して、接続されるチャネルを示します。指定しないと、ファイル内の最初のチャネルが使用されます。
+
+    -----------------------------------------
+
+    connectCache (string): 指定したcacheBlendノード上の次に使用可能なインデックスに接続されるcacheFileノードを指定する編集フラグです。照会フラグとしては、指定したcacheBlendノードまでのcacheFilesを含む文字配列を返します。照会モードでは、このフラグは値を受け入れることができます。
+
+    -----------------------------------------
+
+    keepWeights (boolean): これはconnectCacheフラグとの組み合わせでのみ使用するフラグです。既定では、connectCacheフラグは新たに追加されたcacheWeight以外のすべてのウェイトを0に設定し、新しいキャッシュを完全にコントロールできるようにします。このフラグはその動作を無効にし、すべての既存のブレンドウェイトが保持されるようにします。
+
+    -----------------------------------------
+
+    layerNode (boolean): 選択したオブジェクト上にある既存のcacheBlendsの文字配列を返す照会フラグです。cacheBlendsが見つからない場合は、空の文字配列を返します。
+
+    -----------------------------------------
+
+    nextAvailable (boolean): 選択したcacheBlendノード上の次に使用可能なインデックスを返す照会フラグです。
+
+    -----------------------------------------
+
+    object (string): このフラグはobjectIndexフラグと組み合わせて使用します。照会するインデックスを持つオブジェクトを指定するために使用します。照会モードでは、このフラグに値が必要になります。
+
+    -----------------------------------------
+
+    objectIndex (int): 編集モードでは、connectCacheフラグと一緒に使用して、接続されるobjectIndexを示します。照会モードでは、オブジェクトフラグで指定したオブジェクトに関連するインデックスを返します。
+
+    -----------------------------------------
+
+    Return Value:
+    None: string作成されたキャッシュ レイヤ ノードの名前照会モードでは、戻り値のタイプは照会されたフラグに基づきます。
+    """
+    pass
+
+    
+def cacheFileMerge(endTime: float = 1.0,geometry: bool = False,startTime: float = 1.0) -> None:
+    """
+    選択または指定したキャッシュが正常にマージできる場合、新しいキャッシュの開始/終了フレーム、そしてファイルにデータを書き込むことができない、マージ済みキャッシュ内の任意のギャップの開始/終了フレームの順に返します。照会モードでは、指定したキャッシュ ファイル ノードに接続されたジオメトリの名前を返します。
+
+
+
+    -----------------------------------------
+
+    Flags:
+
+    -----------------------------------------
+    
+    endTime (time): マージ範囲の終了フレームを指定します。指定しない場合、マージするキャッシュの時間から範囲を計算します。
+
+    -----------------------------------------
+
+    geometry (boolean): 指定したキャッシュファイルに接続されたジオメトリノードを検索するために使用する照会専用フラグです。
+
+    -----------------------------------------
+
+    startTime (time): マージ範囲の開始フレームを指定します。指定しない場合、マージするキャッシュの時間から範囲を計算します。
+
+    -----------------------------------------
+
+    Return Value:
+    None: float[]マージしたキャッシュの開始時間と終了時間、続いて任意のギャップの開始/終了string[]照会モードで指定したキャッシュに接続されたジオメトリの名前照会モードでは、戻り値のタイプは照会されたフラグに基づきます。
+    """
+    pass
+
+    
+def cacheFileTrack(insertTrack: int = 1,lock: bool = False,mute: bool = False,removeEmptyTracks: bool = False,removeTrack: int = 1,solo: bool = False,track: int = 1) -> None:
+    """
+    このコマンドは Trax エディタ(Trax Editor)に表示されるキャッシュに関連するトラックの挿入や除去を行うために使用します。また、トラックのロックやミュートなどを行うために、トラックの状態を修正することができます。
+
+
+
+    -----------------------------------------
+
+    Flags:
+
+    -----------------------------------------
+    
+    insertTrack (uint): このフラグを使用して、指定したトラックインデックスに空のトラックを新たに挿入します。
+
+    -----------------------------------------
+
+    lock (boolean): このフラグは、トラック上のクリップをロックするかどうかを指定します。
+
+    -----------------------------------------
+
+    mute (boolean): このフラグは、トラック上のクリップをミュートするかどうかを指定します。
+
+    -----------------------------------------
+
+    removeEmptyTracks (boolean): このフラグを使用して、クリップがないすべてのトラックを除去します。
+
+    -----------------------------------------
+
+    removeTrack (uint): このフラグを使用して、指定したインデックスのトラックを除去します。クリップが設置されているトラックは除去することができません。
+
+    -----------------------------------------
+
+    solo (boolean): このフラグは、トラック上のクリップを単独操作するかどうかを指定します。
+
+    -----------------------------------------
+
+    track (uint): このフラグは表示するキャッシュ用の新しいトラックインデックスを指定するために使用します。トラックインデックスは1で始まります。
+
+    -----------------------------------------
+
+    Return Value:
+    None: なし照会モードでは、戻り値のタイプは照会されたフラグに基づきます。
     """
     pass
 
@@ -3735,6 +4747,102 @@ def dgtimer(combineType: bool = False,hide: str = "",hierarchy: bool = False,max
     pass
 
     
+def diskCache(append: bool = False,cacheType: str = "",close: str = "",closeAll: bool = False,delete: str = "",deleteAll: bool = False,empty: str = "",emptyAll: bool = False,enabledCachesOnly: bool = False,endTime: float = 1.0,frameRangeType: str = "",overSample: bool = False,samplingRate: int = 1,startTime: float = 1.0,tempDir: bool = False) -> None:
+    """
+    ディスク キャッシュを作成、クリア、または閉じるコマンドです。
+
+
+
+    -----------------------------------------
+
+    Flags:
+
+    -----------------------------------------
+    
+    append (boolean): 最後にアペンドし、既存キャッシュを消去しません。
+
+    -----------------------------------------
+
+    cacheType (string): 上書きするキャッシュのタイプを指定します。指定できる値は、パーティクル再生キャッシュの「mcfp」、パーティクル初期キャッシュの「mcfi」、ジグルキャッシュの「mcj」です。このオプションは、キャッシュ作成時に限って有効です。
+
+    -----------------------------------------
+
+    close (string): ディスクキャッシュノード名を指定したキャッシュを閉じます。-eco/enabledCachesOnlyが「true」の場合は、有効なディスクキャッシュノードのみに影響が及びます。
+
+    -----------------------------------------
+
+    closeAll (boolean): すべてのディスクキャッシュファイルを閉じます。-eco/enabledCachesOnlyが「true」の場合は、有効なディスクキャッシュノードのみに影響が及びます。
+
+    -----------------------------------------
+
+    delete (string): ディスクキャッシュノード名を指定したキャッシュを削除します。-eco/enabledCachesOnlyが「true」の場合は、有効なディスクキャッシュノードのみに影響が及びます。
+
+    -----------------------------------------
+
+    deleteAll (boolean): すべてのディスクキャッシュファイルを削除します。-eco/enabledCachesOnlyが「true」の場合は、有効なディスクキャッシュノードのみに影響が及びます。
+
+    -----------------------------------------
+
+    empty (string): 指定したディスクキャッシュノード名のディスクキャッシュの内容をクリアします。-eco/enabledCachesOnlyが「true」の場合は、有効なディスクキャッシュノードのみに影響が及びます。
+
+    -----------------------------------------
+
+    emptyAll (boolean): すべてのディスクキャッシュの内容をクリアします。-eco/enabledCachesOnlyが「true」の場合は、有効なディスクキャッシュノードのみに影響が及びます。
+
+    -----------------------------------------
+
+    enabledCachesOnly (boolean): このフラグは-ea/emptyAllを制限して、「有効な」ディスクキャッシュ(つまり、「.enable」アトリビュートを「true」に設定したディスクキャッシュノード)のみに影響が及びます。
+
+    -----------------------------------------
+
+    endTime (time): キャッシュ範囲の終了フレームを指定します。
+
+    -----------------------------------------
+
+    frameRangeType (string): フレーム範囲のタイプ、「RenderGlobals」、「TimeSlider」、「Start/End」を指定します。「TimeSlider」の場合は、startFrameとendFrameを指定する必要があります（このフラグは現在ではサポートしていません。-startTimeフラグと-endTimeフラグでフレーム範囲を明示的に指定してください）。
+
+    -----------------------------------------
+
+    overSample (boolean): trueにするとオーバーサンプルし、それ以外はアンダーサンプルします。
+
+    -----------------------------------------
+
+    samplingRate (int): 各フレームに関連してサンプリングを実行する頻度を指定します。オーバーサンプリングする場合(-overSampleを指定した場合)、準備段階がフレームごとに評価される回数をこのパラメータで定義します。アンダーサンプリングを行う場合(既定で、-overSampleを指定していない場合)、準備段階はsrフレームごとに1回のみ評価されます(srはこのフラグに指定した値です)。
+
+    -----------------------------------------
+
+    startTime (time): キャッシュ範囲の開始フレームを指定します。
+
+    -----------------------------------------
+
+    tempDir (boolean): この照会専用フラグはdiskCacheテンポラリファイルの位置を照会します。
+
+    -----------------------------------------
+
+    Return Value:
+    None: なし照会モードでは、戻り値のタイプは照会されたフラグに基づきます。
+    """
+    pass
+
+    
+def dynamicLoad() -> None:
+    """
+    引数として渡された DLL をダイナミックにロードします。
+
+
+
+    -----------------------------------------
+
+    Flags:
+
+    -----------------------------------------
+    
+    Return Value:
+    None: なし照会モードでは、戻り値のタイプは照会されたフラグに基づきます。
+    """
+    pass
+
+    
 def error(noContext: bool = False,showLineNumber: bool = False) -> None:
     """
     error コマンドは、ユーザが自分で記述したスクリプトからエラー メッセージを出力し、ランタイム エラーが発生した場合の実行を制御できるように用意されています。
@@ -4039,6 +5147,374 @@ def memory(adjustedVirtualMemory: bool = False,asFloat: bool = False,debug: bool
     pass
 
     
+def ogs(deviceInformation: bool = False,disposeReleasableTextures: bool = False,dumpTexture: str = "",enableHardwareInstancing: bool = False,fragmentEditor: str = "",fragmentXML: str = "",gpuMemoryUsed: bool = False,isLegacyViewportEnabled: bool = False,isWinRemoteSession: bool = False,pause: bool = False,rebakeTextures: bool = False,regenerateUVTilePreview: str = "",reloadTextures: bool = False,reset: bool = False,shaderSource: str = "",toggleTexturePaging: bool = False,traceRenderPipeline: bool = False) -> None:
+    """
+    OGS はビューポート レンダラの 1 つです。機能の統合は多くの手間がかかるため、今後数回のリリースで展開していきます。展開にあたっては慎重を期し、データベースを既知の状態に戻すための安全手段を提供します。これがこのコマンドの機能です。このコマンドは、ディペンデンシー グラフに状態を復帰するために使用する「dgdirty」と同じです。
+
+
+
+    -----------------------------------------
+
+    Flags:
+
+    -----------------------------------------
+    
+    deviceInformation (boolean): 使用すると、現在のデバイス情報が出力されます。
+
+    -----------------------------------------
+
+    disposeReleasableTextures (boolean): レンダリングに必要ない、GPUメモリ内のリリース可能なすべてのファイルテクスチャをクリーンアップします。
+
+    -----------------------------------------
+
+    dumpTexture (string): 使用すると、GPUテクスチャメモリ使用量情報がダンプされます(MB単位)。FLAGgpuMemoryUsedとともに使用する必要があります。最終的な情報の詳細は、文字列パラメータによって指定されます。現在使用可能な値は、「full」、「total」です。
+
+    -----------------------------------------
+
+    enableHardwareInstancing (boolean): OGS内のインスタンス化可能なレンダー項目について、新しいGPUのインスタンス化を有効/無効にします。
+
+    -----------------------------------------
+
+    fragmentEditor (string): 使用すると、フラグメントエディタUIが起動されます。
+
+    -----------------------------------------
+
+    fragmentXML (string): シェーディングノードに関連付けられているフラグメントXMLを取得します。
+
+    -----------------------------------------
+
+    gpuMemoryUsed (boolean): 使用すると、使用中のGPUメモリの概算量(MB)を出力します。
+
+    -----------------------------------------
+
+    isLegacyViewportEnabled (boolean): 従来のビューポートが有効であるかどうかを照会します。
+
+    -----------------------------------------
+
+    isWinRemoteSession (boolean): これがリモートセッションであるかどうかを照会します。
+
+    -----------------------------------------
+
+    pause (boolean): VP2表示の更新の一時停止が切り替わります。
+
+    -----------------------------------------
+
+    rebakeTextures (boolean): 使用すると、OGSのベイク処理されたテクスチャがすべて再ベイクされます。
+
+    -----------------------------------------
+
+    regenerateUVTilePreview (string): 使用すると、OGSのすべてのUVタイルのプレビューテクスチャが再生成されます。
+
+    -----------------------------------------
+
+    reloadTextures (boolean): 使用すると、OGSのテクスチャがすべてリロードされます。
+
+    -----------------------------------------
+
+    reset (boolean): このフラグを使用すると、すべてのビューポートで使用されるOGSデータベース全体がリセットされます。照会モードでは、影響を受けるビューポートの数が返されますが、リセットは実際には行われません。OGSを使用しているビューポートがない場合、OGSはDGの変更の受け取りを停止します。
+
+    -----------------------------------------
+
+    shaderSource (string): 指定したマテリアルのシェーダソースを取得します。
+
+    -----------------------------------------
+
+    toggleTexturePaging (boolean): 使用すると、既定のOGSテクスチャページングメカニズムが切り替わります。
+
+    -----------------------------------------
+
+    traceRenderPipeline (boolean): レンダラパイプラインのデバッグトレーシングを有効にします。
+
+    -----------------------------------------
+
+    Return Value:
+    None: string演算の結果を返します。照会モードでは、戻り値のタイプは照会されたフラグに基づきます。
+    """
+    pass
+
+    
+def openGLExtension(extension: str = "",renderer: bool = False,vendor: bool = False,version: bool = False) -> None:
+    """
+    このコマンドは、指定した OpenGL 拡張子がサポートされているかどうかによって、拡張子の名前を返します。入力は、-extension フラグへの拡張子の文字列です。-extension フラグを使用しない場合、またはこのフラグへの文字列引数が空文字列の場合は、すべての拡張子名が単一の文字列として返されます。拡張子が存在しても、その拡張子がサポートされているとは限りません。このコマンドを使用できるのは、モデリング ビューを作成した場合のみです。それ以外の場合、初期化される拡張子はなく、文字列は常に空文字列になります。
+
+
+
+    -----------------------------------------
+
+    Flags:
+
+    -----------------------------------------
+    
+    extension (string): 照会するOpenGL拡張子を指定します。
+
+    -----------------------------------------
+
+    renderer (boolean): OpenGLレンダラの照会を指定します。
+
+    -----------------------------------------
+
+    vendor (boolean): OpenGL実装を担当する会社の照会を指定します。
+
+    -----------------------------------------
+
+    version (boolean): OpenGLバージョンの照会を指定します。
+
+    -----------------------------------------
+
+    Return Value:
+    None: stringサポートされている文字列
+    """
+    pass
+
+    
+def profiler(addCategory: str = "",allCategories: bool = False,bufferSize: int = 1,categoryIndex: int = 1,categoryIndexToName: int = 1,categoryName: str = "",categoryNameToIndex: str = "",categoryRecording: bool = False,clearAllMelInstrumentation: bool = False,colorIndex: int = 1,eventCPUId: bool = False,eventCategory: bool = False,eventColor: bool = False,eventCount: bool = False,eventDescription: bool = False,eventDuration: bool = False,eventIndex: int = 1,eventName: bool = False,eventStartTime: bool = False,eventThreadId: bool = False,instrumentMel: bool = False,load: str = "",output: str = "",procedureDescription: str = "",procedureName: str = "",removeCategory: str = "",reset: bool = False,sampling: bool = False,signalEvent: bool = False,signalMelEvent: bool = False) -> None:
+    """
+    プロファイラは、シーン、スクリプト、およびプラグインのパフォーマンスを調整するための補助として、Maya のキー イベントからタイミング情報を記録するために使用されます。ユーザ記述のプラグインと Python スクリプトにより、API の MProfilingScope (C++)、MProfilingContextManager (Python) および MProfiler クラスを使用して、ユーザ独自のコードのためのプロファイリング情報を生成することもできます。
+
+
+
+    -----------------------------------------
+
+    Flags:
+
+    -----------------------------------------
+    
+    addCategory (string): プロファイラに新しいカテゴリを追加します。新しいカテゴリのインデックスを返します。
+
+    -----------------------------------------
+
+    allCategories (boolean): すべてのカテゴリの名前を照会します。
+
+    -----------------------------------------
+
+    bufferSize (int): 切り替え:指定したイベントの数に適合するようにバッファサイズを変更します(サンプリングがオフになっていることが必要)。照会:現在のバッファサイズを返します。新しいバッファサイズは次のサンプリングが開始されたときに有効になります。バッファが一杯になると、記録が停止します。
+
+    -----------------------------------------
+
+    categoryIndex (int): その他のフラグと一緒に使用し、カテゴリのインデックスを示します。照会モードでは、このフラグに値が必要になります。
+
+    -----------------------------------------
+
+    categoryIndexToName (int): カテゴリの名前を指定したインデックスで返します。照会モードでは、このフラグに値が必要になります。
+
+    -----------------------------------------
+
+    categoryName (string): その他のフラグと一緒に使用し、カテゴリの名前を示します。照会モードでは、このフラグに値が必要になります。
+
+    -----------------------------------------
+
+    categoryNameToIndex (string): カテゴリのインデックスを指定した名前で返します。照会モードでは、このフラグに値が必要になります。
+
+    -----------------------------------------
+
+    categoryRecording (boolean): 切り替え:カテゴリ記録の有効/無効を切り替えます。照会:カテゴリの記録がオンになっている場合に返されます。照会するカテゴリを指定するには、-categoryIndexまたは-categoryNameフラグが必要です。
+
+    -----------------------------------------
+
+    clearAllMelInstrumentation (boolean): MELコマンドまたはプロシージャの計測をすべてクリアします。
+
+    -----------------------------------------
+
+    colorIndex (int): "-instrumentMeltrue"と共に使用して、プロファイリング結果に表示するカラーインデックスを指定します。
+
+    -----------------------------------------
+
+    eventCPUId (boolean): 指定したインデックスにあるイベントのCPUIDを照会します。照会するイベントを指定するには、-eventIndexフラグが必要です。
+
+    -----------------------------------------
+
+    eventCategory (boolean): 指定したインデックスに属するイベントのカテゴリインデックスを照会します。照会するイベントを指定するには、-eventIndexフラグが必要です。
+
+    -----------------------------------------
+
+    eventColor (boolean): 指定したインデックスにあるイベントのカラーを照会します。照会するイベントを指定するには、-eventIndexフラグが必要です。
+
+    -----------------------------------------
+
+    eventCount (boolean): バッファ内のイベントの数を照会します。
+
+    -----------------------------------------
+
+    eventDescription (boolean): 指定したインデックスにあるイベントの説明を照会します。照会するイベントを指定するには、-eventIndexフラグが必要です。
+
+    -----------------------------------------
+
+    eventDuration (boolean): 指定したインデックスにあるイベントの継続期間を照会します。時間の単位は「マイクロ秒」です。シグナルイベントの継続期間は0になります。照会するイベントを指定するには、-eventIndexフラグが必要です。
+
+    -----------------------------------------
+
+    eventIndex (int): 通常はその他のフラグと一緒に使用され、イベントのインデックスを示します。照会モードでは、このフラグに値が必要になります。
+
+    -----------------------------------------
+
+    eventName (boolean): 指定したインデックスにあるイベントの名前を照会します。照会するイベントを指定するには、-eventIndexフラグが必要です。
+
+    -----------------------------------------
+
+    eventStartTime (boolean): 指定したインデックスにあるイベントの時間を照会します。時間の単位は「マイクロ秒」です。照会するイベントを指定するには、-eventIndexフラグが必要です。
+
+    -----------------------------------------
+
+    eventThreadId (boolean): 指定したインデックスにあるイベントのスレッドIDを照会します。照会するイベントを指定するには、-eventIndexフラグが必要です。
+
+    -----------------------------------------
+
+    instrumentMel (boolean): MELコマンドまたはプロシージャの計測の有効/無効を切り替えます。計測が有効になっている場合、実行されたMELコマンドまたはプロシージャが[プロファイラ]ウィンドウにプロファイルされて表示されます。計測を有効にするには、-procedureName、-colorIndex、および-categoryIndexフラグが必要です。計測を無効にするには、-procedureNameフラグが必要です。
+
+    -----------------------------------------
+
+    load (string): 指定のファイルから記録されたイベントを読み込みます。
+
+    -----------------------------------------
+
+    output (string): 記録したイベントを指定のファイルに出力します。
+
+    -----------------------------------------
+
+    procedureDescription (string): "-instrumentMeltrue"と共に使用して、計測されるMELコマンドまたはプロシージャの説明を提供します。この説明は、[プロファイラツール]ウィンドウに表示されます。
+
+    -----------------------------------------
+
+    procedureName (string): -instrumentMelと共に使用して、計測を有効化/無効化するプロシージャの名前を指定します。
+
+    -----------------------------------------
+
+    removeCategory (string): プロファイラの既存のカテゴリを削除します。除去されたカテゴリのインデックスを返します。
+
+    -----------------------------------------
+
+    reset (boolean): プロファイラのデータをリセットします(サンプリングがオフになっていることが必要)。
+
+    -----------------------------------------
+
+    sampling (boolean): 切り替え:イベント記録の有効/無効を切り替えます。照会:イベントの記録がオンになっている場合に返されます。
+
+    -----------------------------------------
+
+    signalEvent (boolean): 指定したインデックスにあるイベントがシグナルイベントかどうかを照会します。照会するイベントを指定するには、-eventIndexフラグが必要です。シグナルイベントは開始モーメントのみを記憶し、継続期間については記憶しません。このため、このイベントが発生するのが重要で、継続期間は重要ではない場合にのみ使用できます。
+
+    -----------------------------------------
+
+    signalMelEvent (boolean): "-instrumentMeltrue"と共に使用して、計測されたMELコマンドまたはプロシージャがプロファイリング中にシグナルイベントとして使われることをプロファイラに伝えます。シグナルイベントは開始モーメントのみを記憶し、継続期間については記憶しません。このため、このイベントが発生するのが重要で、継続期間は重要ではない場合にのみ使用できます。
+
+    -----------------------------------------
+
+    Return Value:
+    None: なし照会モードでは、戻り値のタイプは照会されたフラグに基づきます。
+    """
+    pass
+
+    
+def profilerTool(categoryView: bool = False,collapseSelectedEvents: bool = False,collapseSelectedEventsRepetition: bool = False,cpuView: bool = False,destroy: bool = False,exists: bool = False,expandSelectedEvents: bool = False,expandSelectedEventsRepetition: bool = False,findNext: bool = False,findPrevious: bool = False,frameAll: bool = False,frameSelected: bool = False,isolateSegment: int = 1,make: bool = False,matchWholeWord: bool = False,searchEvent: str = "",segmentCount: bool = False,showAllEvent: bool = False,showCriticalPath: bool = False,showSelectedEvents: bool = False,showSelectedEventsRepetition: bool = False,threadView: bool = False,unisolateSegment: bool = False) -> None:
+    """
+    このスクリプトは、プロファイラ ツールのビュー(描画領域)と対話する profilerPanel によって使用されます。これは プロファイラ ツールの一部の動作をコントロールするために使用できます。
+
+
+
+    -----------------------------------------
+
+    Flags:
+
+    -----------------------------------------
+    
+    categoryView (boolean): ビューモードをカテゴリビューに変更する
+
+    -----------------------------------------
+
+    collapseSelectedEvents (boolean): 選択したイベントのすべてのサブイベントを非表示にし、最上位のイベントのみが表示されるようにする
+
+    -----------------------------------------
+
+    collapseSelectedEventsRepetition (boolean): コメントに基づき、選択したイベントのすべてのサブイベントの繰り返しを非表示にする
+
+    -----------------------------------------
+
+    cpuView (boolean): ビューモードをCPUビューに変更する
+
+    -----------------------------------------
+
+    destroy (boolean): プロファイラツール内部フラグを破棄します。ユーザは使用しないでください。
+
+    -----------------------------------------
+
+    exists (boolean): プロファイラツールビューが存在するかどうかを照会します。プロファイラツールは、「profilerTool-make」を呼び出した後しか存在できません。
+
+    -----------------------------------------
+
+    expandSelectedEvents (boolean): 選択したイベントのすべてのサブイベントを表示する
+
+    -----------------------------------------
+
+    expandSelectedEventsRepetition (boolean): コメントに基づき、選択したイベントのすべてのサブイベントの繰り返しを表示する
+
+    -----------------------------------------
+
+    findNext (boolean): このフラグはフラグ-searchEventと併用されます。
+
+    -----------------------------------------
+
+    findPrevious (boolean): このフラグはフラグ-searchEventと併用されます。
+
+    -----------------------------------------
+
+    frameAll (boolean): profilerToolView内のすべてのイベントをフレームに入れる
+
+    -----------------------------------------
+
+    frameSelected (boolean): profilerToolViewで選択されたすべてのイベントをフレームに入れる
+
+    -----------------------------------------
+
+    isolateSegment (int): 指定されたセグメントを分離します。セグメントは1つのアニメーションフレームで発生したイベントのセットです。-segmentCountフラグを使用すると、イベントバッファ内のセグメント数を照会できます。セグメントのインデックスは0から開始します。指定したセグメントが存在しない場合は、エラーが発生します。
+
+    -----------------------------------------
+
+    make (boolean): プロファイラツールを作成し、最も最近作成されたレイアウト(内部フラグ)の親にするユーザは使用しないでください。
+
+    -----------------------------------------
+
+    matchWholeWord (boolean): イベントを検索するときに、単語の完全一致を条件とするかどうかをプロファイラツールに指示します。既定値はfalseです。
+
+    -----------------------------------------
+
+    searchEvent (string): イベントを検索する-searchEventを使用する前に-matchWholeWordbeforeを設定できます。-matchWholeWordをtrueに設定すると、プロファイラツールは、名前が文字列と正確に一致するイベントを検索します。-matchWholeWordをfalseに設定すると、プロファイラツールは、名前に文字列が含まれているイベントを検索します。このフラグと-findNextを併用すると、プロファイラツールは、現在選択されているイベントの次に見つかる最初のイベントを検索します。このフラグと-findPreviousを併用すると、プロファイラツールは、現在選択されているイベントの前に見つかる最初のイベントを検索します。現在選択されているイベントがないか、複数のイベントが選択されている場合、検索はプロファイラバッファ内の最初のイベントから開始されます。このフラグに-findNextおよび-findPreviousを併用しないと、プロファイラツールはすべてのイベントを検出します。照会モードでは、このフラグに値が必要になります。
+
+    -----------------------------------------
+
+    segmentCount (boolean): イベントバッファ内のセグメントの数を返します。
+
+    -----------------------------------------
+
+    showAllEvent (boolean): すべてのイベントを表示(フィルタによってイベントが非表示になっている場合)(true)、またはすべてのイベントを非表示(false)
+
+    -----------------------------------------
+
+    showCriticalPath (boolean): 選択したフレームの重要なパスを表示する
+
+    -----------------------------------------
+
+    showSelectedEvents (boolean): 選択したイベントのみを表示(true)、または選択したすべてのイベントを非表示(false)
+
+    -----------------------------------------
+
+    showSelectedEventsRepetition (boolean): 選択したイベントの繰り返しのみをそのコメント(true)に基づいて表示、または選択したすべてのイベントの繰り返しをそのコメント(false)に基づいて非表示
+
+    -----------------------------------------
+
+    threadView (boolean): ビューモードをスレッドビューに変更する
+
+    -----------------------------------------
+
+    unisolateSegment (boolean): 現在分離されているセグメントの分離を解除します。セグメントが現在分離されていない場合は、何も起こりません。
+
+    -----------------------------------------
+
+    Return Value:
+    None: なし照会モードでは、戻り値のタイプは照会されたフラグに基づきます。
+    """
+    pass
+
+    
 def redo() -> None:
     """
     最後に取り消されたコマンドを元に戻すリストから取り出して再実行します。
@@ -4053,6 +5529,72 @@ def redo() -> None:
     
     Return Value:
     None: なし
+    """
+    pass
+
+    
+def shotTrack(insertTrack: int = 1,lock: bool = False,mute: bool = False,numTracks: int = 1,removeEmptyTracks: bool = False,removeTrack: int = 1,selfmute: bool = False,solo: bool = False,swapTracks: Tuple[int, int] = tuple(1, 1),title: str = "",track: int = 1,unsolo: bool = False) -> None:
+    """
+    このコマンドはシーケンサ(Sequencer)に表示されるショットに関連するトラックの挿入や除去を行うために使用します。また、トラックのロックやミュートなどを行うために、トラックの状態を修正することができます。
+
+
+
+    -----------------------------------------
+
+    Flags:
+
+    -----------------------------------------
+    
+    insertTrack (uint): このフラグを使用して、指定したトラックインデックスに空のトラックを新たに挿入します。
+
+    -----------------------------------------
+
+    lock (boolean): このフラグは、トラック上のショットをロックするかどうかを指定します。
+
+    -----------------------------------------
+
+    mute (boolean): このフラグは、トラック上のショットをミュートするかどうかを指定します。
+
+    -----------------------------------------
+
+    numTracks (uint): トラックの番号を照会するには
+
+    -----------------------------------------
+
+    removeEmptyTracks (boolean): このフラグを使用して、クリップがないすべてのトラックを除去します。
+
+    -----------------------------------------
+
+    removeTrack (uint): このフラグを使用して、指定したインデックスのトラックを除去します。クリップが設置されているトラックは除去することができません。
+
+    -----------------------------------------
+
+    selfmute (boolean): このフラグは、トラック上のショットをミュートするかどうかを指定します(muteとは異なり、ソロ化を無視します)。
+
+    -----------------------------------------
+
+    solo (boolean): このフラグは、トラック上のショットを単独操作するかどうかを指定します。
+
+    -----------------------------------------
+
+    swapTracks ([uint, uint]): このフラグは、指定した2つのトラックの内容を入れ替えるために使用します。
+
+    -----------------------------------------
+
+    title (string): トラックのタイトルを指定します。
+
+    -----------------------------------------
+
+    track (uint): 自身のtrackNumberを使用して操作されるトラックを指定します。照会モードでは、このフラグに値が必要になります。
+
+    -----------------------------------------
+
+    unsolo (boolean): このフラグは、トラック上のショットをソロ化解除するかどうかを指定します。
+
+    -----------------------------------------
+
+    Return Value:
+    None: なし照会モードでは、戻り値のタイプは照会されたフラグに基づきます。
     """
     pass
 
