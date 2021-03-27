@@ -7,17 +7,19 @@ import random
 import requests
 from bs4 import BeautifulSoup
 
+MAYA_VERSION = "2018"
 
-BASE_HTML = "https://help.autodesk.com/cloudhelp/2018/JPN/Maya-Tech-Docs/CommandsPython/{}"
-ROOT_HTML = BASE_HTML.format("index_all.html")
+BASE_HTML = "https://help.autodesk.com/cloudhelp/{}/JPN/Maya-Tech-Docs/CommandsPython/{}"
+ROOT_HTML = BASE_HTML.format(MAYA_VERSION, "index_all.html")
 
-ANIMATION_HTML = BASE_HTML.format("cat_Animation.html")
-WINDOWS_HTML = BASE_HTML.format("cat_Windows.html")
-GENERAL_HTML = BASE_HTML.format("cat_General.html")
-LANGUAGE_HTML = BASE_HTML.format("cat_Language.html")
-MODELING_HTML = BASE_HTML.format("cat_Modeling.html")
-RENDERING_HTML = BASE_HTML.format("cat_Rendering.html")
-SYSTEM_HTML = BASE_HTML.format("cat_System.html")
+EFFECTS_HTML = BASE_HTML.format(MAYA_VERSION, "cat_Effects.html")
+ANIMATION_HTML = BASE_HTML.format(MAYA_VERSION, "cat_Animation.html")
+WINDOWS_HTML = BASE_HTML.format(MAYA_VERSION, "cat_Windows.html")
+GENERAL_HTML = BASE_HTML.format(MAYA_VERSION, "cat_General.html")
+LANGUAGE_HTML = BASE_HTML.format(MAYA_VERSION, "cat_Language.html")
+MODELING_HTML = BASE_HTML.format(MAYA_VERSION, "cat_Modeling.html")
+RENDERING_HTML = BASE_HTML.format(MAYA_VERSION, "cat_Rendering.html")
+SYSTEM_HTML = BASE_HTML.format(MAYA_VERSION, "cat_System.html")
 
 headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.90 Safari/537.36",
            }
@@ -29,7 +31,8 @@ FILE_CANDIDACY = [
     ["Modeling", MODELING_HTML],
     ["Language", LANGUAGE_HTML],
     ["General", GENERAL_HTML],
-    ["Animation", ANIMATION_HTML]
+    ["Animation", ANIMATION_HTML],
+    ["Effects", EFFECTS_HTML]
 ]
 
 CORRESPONDENCE_TABLE = [
@@ -90,7 +93,7 @@ BASE_DESCRIPTION_ARGS = """
     -----------------------------------------
 """
 
-BASE_FILEPATH = "mayaSDK-2018/maya/cmds/{}.py"
+BASE_FILEPATH = "mayaSDK-{}/maya/cmds/{}.py"
 
 ARGS_WORD = "{args_name}: {args_type} = {default_value}"
 
@@ -115,7 +118,7 @@ class FunctionData(object):
         Returns:
             [type]: [description]
         """
-        res_sub_html = BASE_HTML.format(html_name)
+        res_sub_html = BASE_HTML.format(MAYA_VERSION, html_name)
 
         resuponse_html = requests.get(res_sub_html, headers=headers)
         soup = BeautifulSoup(resuponse_html.text, "html.parser")
@@ -297,7 +300,7 @@ def create_function_file(html_file_path, file_name):
         time.sleep(random.randint(1, 3))
         try:
             function_data = FunctionData(function_url)
-            function_data.write_file(BASE_FILEPATH.format(file_name))
+            function_data.write_file(BASE_FILEPATH.format(MAYA_VERSION, file_name))
         except Exception as e:
             print(e)
             print(file_name)
